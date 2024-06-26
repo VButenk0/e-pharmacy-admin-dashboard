@@ -14,16 +14,16 @@ body {
   display: flex;
   justify-content: center;
   
-  /* color: var(--primary-text);
-  font-family: "Gilroy Medium";
-  font-size: 14px;
-  line-height: 1.28571;
-  letter-spacing: -0.28px;
+  color: var(--primary-text);
+  font-family: "Inter Medium";
+  font-size: 16px;
+  line-height: 1.125;
 
-  background-color: var(--main-bg-color); */
+  background-color: var(--bg-color);
 
   min-width: 320px;
   max-width: 1440px;
+  /* max-height: 100vh; */
 
   margin: 0 auto;
 

@@ -1,0 +1,22 @@
+:root {
+  --primary-text: #1d1e21;
+  --secondary-text: #dcdddf;
+  --white-text: #f9f9f9;
+
+  --border-color: #1d1e211a;
+
+  --accent: #59b17a;
+  --accent2: #e85050;
+  --light-green: #59b17a1a;
+  --light-red: #e850501a;
+
+  --completed: #59b17a;
+  --confirmed: #8059e4;
+  --pending: #f79042;
+  --cancelled: #e85050;
+  --processing: #70a6e8;
+
+  --bg-color: #f7f8fa;
+  --tab-bg: #e7f1ed;
+  --white: #ffffff;
+}
