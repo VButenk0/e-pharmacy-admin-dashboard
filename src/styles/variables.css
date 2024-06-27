@@ -1,11 +1,13 @@
 :root {
   --primary-text: #1d1e21;
+  --trans-text: #1d1e2166;
   --secondary-text: #dcdddf;
   --white-text: #f9f9f9;
 
   --border-color: #1d1e211a;
 
   --accent: #59b17a;
+  --accent-hover: #3f945f;
   --accent2: #e85050;
   --light-green: #59b17a1a;
   --light-red: #e850501a;
