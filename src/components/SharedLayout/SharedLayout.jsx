@@ -7,10 +7,10 @@ const SharedLayout = () => {
   return (
     <>
       <Header />
+      <Sidebar />
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>
-      <Sidebar />
     </>
   );
 };

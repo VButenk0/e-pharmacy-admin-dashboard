@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
 export const StyledContainer = styled.div`
-  padding: 75px 40px 40px;
+  position: absolute;
+  top: 80px;
+  left: 80px;
+
+  padding: 20px 40px 40px;
 `;
