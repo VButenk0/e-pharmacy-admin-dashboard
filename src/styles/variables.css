@@ -13,10 +13,15 @@
   --light-red: #e850501a;
 
   --completed: #59b17a;
+  --completed-bg: #59b17a1a;
   --confirmed: #8059e4;
+  --confirmed-bg: #8059e41a;
   --pending: #f79042;
+  --pending-bg: #f790421a;
   --cancelled: #e85050;
+  --cancelled-bg: #e850501a;
   --processing: #70a6e8;
+  --processing-bg: #70a6e81a;
 
   --bg-color: #f7f8fa;
   --tab-bg: #e7f1ed;

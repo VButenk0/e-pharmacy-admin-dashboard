@@ -77,7 +77,7 @@ button {
 }
 
 input{
-  background: transparent;
+  /* background: transparent; */
   border: none;
   outline: none;
 }
