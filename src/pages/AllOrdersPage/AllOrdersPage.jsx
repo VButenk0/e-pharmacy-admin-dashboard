@@ -3,7 +3,9 @@ import sprite from "../../assets/sprite.svg";
 import {
   AllOrdersWrpr,
   FilterWrpr,
+  OrderStatusWrpr,
   PaginWrpr,
+  TableTitle,
   TableWrpr,
 } from "./AllOrdersPage.styled";
 
@@ -63,37 +65,39 @@ const AllOrdersPage = () => {
             <p>Filter</p>
           </button>
         </FilterWrpr>
-        <TableWrpr>
-          <h2>All orders</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>User Info</th>
-                <th>Address</th>
-                <th>Products</th>
-                <th>Order date</th>
-                <th>Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <tr key={index}>
-                  <th>{order.user}</th>
-                  <th>{order.address}</th>
-                  <th>{order.products}</th>
-                  <th>{order.date}</th>
-                  <th>{order.price}</th>
-                  <th>
-                    <div className={order.status.toLowerCase()}>
-                      {order.status}
-                    </div>
-                  </th>
+        <div>
+          <TableTitle>All orders</TableTitle>
+          <TableWrpr>
+            <table>
+              <thead>
+                <tr>
+                  <th>User Info</th>
+                  <th>Address</th>
+                  <th>Products</th>
+                  <th>Order date</th>
+                  <th>Price</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </TableWrpr>
+              </thead>
+              <tbody>
+                {orders.map((order, index) => (
+                  <tr key={index}>
+                    <th>{order.user}</th>
+                    <th>{order.address}</th>
+                    <th>{order.products}</th>
+                    <th>{order.date}</th>
+                    <th>{order.price}</th>
+                    <th>
+                      <OrderStatusWrpr className={order.status.toLowerCase()}>
+                        {order.status}
+                      </OrderStatusWrpr>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableWrpr>
+        </div>
         <PaginWrpr>
           <div>
             <span className="active"></span>

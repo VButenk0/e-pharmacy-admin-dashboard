@@ -20,12 +20,12 @@ const Sidebar = () => {
             <use href={sprite + "#products"}></use>
           </svg>
         </StyledBtn>
-        <StyledBtn to={"/customers"}>
+        <StyledBtn to={"/suppliers"}>
           <svg width="16" height="16">
             <use href={sprite + "#customers"}></use>
           </svg>
         </StyledBtn>
-        <StyledBtn to={"/suppliers"}>
+        <StyledBtn to={"/customers"}>
           <svg width="16" height="16" fill="none">
             <use href={sprite + "#suppliers"}></use>
           </svg>

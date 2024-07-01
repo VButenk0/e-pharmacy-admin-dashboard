@@ -36,25 +36,31 @@ export const FilterWrpr = styled.div`
   }
 `;
 
+export const TableTitle = styled.h2`
+  background-color: var(--tab-bg);
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+
+  font-size: 18px;
+  font-family: "Inter SemiBold";
+  line-height: 1.33333;
+
+  padding: 20px;
+`;
+
 export const TableWrpr = styled.div`
   display: flex;
   flex-direction: column;
   width: 1280px;
-  background-color: var(--tab-bg);
-  border-radius: 8px;
-
-  h2 {
-    font-size: 18px;
-    font-family: "Inter SemiBold";
-    line-height: 1.33333;
-
-    padding: 20px;
-  }
+  border-radius: 0 0 8px 8px;
+  padding: 0 20px;
+  background-color: var(--white);
+  border-top: none;
+  border: 1px solid var(--border-color);
 
   table {
     border-collapse: collapse;
     background-color: var(--white);
-    /* padding: 0 20px; */
     width: 100%;
     height: 100%;
 
@@ -69,9 +75,7 @@ export const TableWrpr = styled.div`
     tbody tr {
       border-top: 1px solid var(--border-color);
       border-bottom: 1px solid var(--border-color);
-      &:first-of-type {
-        border-top: none;
-      }
+
       &:last-of-type {
         border-bottom: none;
       }
@@ -95,9 +99,11 @@ export const TableWrpr = styled.div`
 
       &:first-of-type {
         border-left: none;
+        padding-left: 0;
       }
       &:last-of-type {
         border-right: none;
+        padding-right: 0;
       }
 
       img {
@@ -105,37 +111,37 @@ export const TableWrpr = styled.div`
         height: 36px;
         border-radius: 50%;
       }
-
-      div {
-        width: fit-content;
-        padding: 4px 12px;
-        border-radius: 40px;
-
-        font-size: 14px;
-        letter-spacing: -0.7px;
-
-        &.completed {
-          color: var(--completed);
-          background-color: var(--completed-bg);
-        }
-        &.confirmed {
-          color: var(--confirmed);
-          background-color: var(--confirmed-bg);
-        }
-        &.pending {
-          color: var(--pending);
-          background-color: var(--pending-bg);
-        }
-        &.cancelled {
-          color: var(--cancelled);
-          background-color: var(--cancelled-bg);
-        }
-        &.processing {
-          color: var(--processing);
-          background-color: var(--processing-bg);
-        }
-      }
     }
+  }
+`;
+
+export const OrderStatusWrpr = styled.div`
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 40px;
+
+  font-size: 14px;
+  letter-spacing: -0.7px;
+
+  &.completed {
+    color: var(--completed);
+    background-color: var(--completed-bg);
+  }
+  &.confirmed {
+    color: var(--confirmed);
+    background-color: var(--confirmed-bg);
+  }
+  &.pending {
+    color: var(--pending);
+    background-color: var(--pending-bg);
+  }
+  &.cancelled {
+    color: var(--cancelled);
+    background-color: var(--cancelled-bg);
+  }
+  &.processing {
+    color: var(--processing);
+    background-color: var(--processing-bg);
   }
 `;
 

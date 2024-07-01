@@ -3,6 +3,7 @@ import sprite from "../../assets/sprite.svg";
 import {
   AllOrdersWrpr,
   PaginWrpr,
+  TableTitle,
   TableWrpr,
 } from "../AllOrdersPage/AllOrdersPage.styled";
 import {
@@ -16,35 +17,35 @@ import {
 const AllProductsPage = () => {
   const products = [
     {
-      product: "Moringa",
+      productInfo: "Moringa",
       category: "Medicine",
       stock: "12",
       suppliers: "Square",
       price: "89.66",
     },
     {
-      product: "Antibiotic 250 mg",
+      productInfo: "Antibiotic 250 mg",
       category: "Heart",
       stock: "19",
       suppliers: "Acme",
       price: "34.16",
     },
     {
-      product: "Headache Relief",
+      productInfo: "Headache Relief",
       category: "Head",
       stock: "09",
       suppliers: "Beximco",
       price: "53.76",
     },
     {
-      product: "Pharmacy",
+      productInfo: "Pharmacy",
       category: "Hand",
       stock: "14",
       suppliers: "ACI",
       price: "28.57",
     },
     {
-      product: "Magnesium",
+      productInfo: "Magnesium",
       category: "Leg",
       stock: "10",
       suppliers: "Uniliver",
@@ -72,46 +73,48 @@ const AllProductsPage = () => {
             <p>Add a new product</p>
           </AddBtn>
         </FilterAndAddWrpr>
-        <TableWrpr>
-          <h2>All products</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Product Info</th>
-                <th>Category</th>
-                <th>Stock</th>
-                <th>Suppliers</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product, index) => (
-                <tr key={index}>
-                  <th>{product.product}</th>
-                  <th>{product.category}</th>
-                  <th>{product.stock}</th>
-                  <th>{product.suppliers}</th>
-                  <th>{product.price}</th>
-                  <th>
-                    <BtnsWrpr>
-                      <ActionBtn>
-                        <svg width="16" height="16">
-                          <use href={sprite + "#edit"}></use>
-                        </svg>
-                      </ActionBtn>
-                      <ActionBtn className="delete">
-                        <svg width="16" height="16">
-                          <use href={sprite + "#delete"}></use>
-                        </svg>
-                      </ActionBtn>
-                    </BtnsWrpr>
-                  </th>
+        <div>
+          <TableTitle>All products</TableTitle>
+          <TableWrpr>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product Info</th>
+                  <th>Category</th>
+                  <th>Stock</th>
+                  <th>Suppliers</th>
+                  <th>Price</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </TableWrpr>
+              </thead>
+              <tbody>
+                {products.map((product, index) => (
+                  <tr key={index}>
+                    <th>{product.productInfo}</th>
+                    <th>{product.category}</th>
+                    <th>{product.stock}</th>
+                    <th>{product.suppliers}</th>
+                    <th>{product.price}</th>
+                    <th>
+                      <BtnsWrpr>
+                        <ActionBtn>
+                          <svg width="16" height="16">
+                            <use href={sprite + "#edit"}></use>
+                          </svg>
+                        </ActionBtn>
+                        <ActionBtn className="delete">
+                          <svg width="16" height="16">
+                            <use href={sprite + "#delete"}></use>
+                          </svg>
+                        </ActionBtn>
+                      </BtnsWrpr>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableWrpr>
+        </div>
         <PaginWrpr>
           <div>
             <span className="active"></span>
