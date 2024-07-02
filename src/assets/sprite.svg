@@ -78,4 +78,8 @@
   <path d="M6.66667 7.33331V11.3333" stroke="#E85050" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M9.33333 7.33331V11.3333" stroke="#E85050" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
+<symbol xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" id="x">
+  <path d="M19.5 6.5L6.5 19.5" stroke="#1D1E21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M6.5 6.5L19.5 19.5" stroke="#1D1E21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
 </svg>

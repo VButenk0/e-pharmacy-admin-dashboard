@@ -1,5 +1,13 @@
+import { useDispatch, useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import {
+  changeAddProductModal,
+  changeDeleteProductModal,
+  changeEditProductModal,
+  changeModalOpen,
+} from "../../redux/modals/modalsSlice";
+import { selectIsModalOpen } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -13,8 +21,12 @@ import {
   FilterAndAddWrpr,
   FilterWrpr,
 } from "./AllProductsPage.styled";
+import Modal from "../../components/Modals/Modal/Modal";
 
 const AllProductsPage = () => {
+  const dispatch = useDispatch();
+  const modalIsOpen = useSelector(selectIsModalOpen);
+
   const products = [
     {
       productInfo: "Moringa",
@@ -53,6 +65,21 @@ const AllProductsPage = () => {
     },
   ];
 
+  const handleAddProduct = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeAddProductModal(true));
+  };
+
+  const handleEditProduct = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeEditProductModal(true));
+  };
+
+  const handleDeleteProduct = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeDeleteProductModal(true));
+  };
+
   return (
     <Container>
       <AllOrdersWrpr>
@@ -66,7 +93,7 @@ const AllProductsPage = () => {
               <p>Filter</p>
             </button>
           </FilterWrpr>
-          <AddBtn>
+          <AddBtn onClick={handleAddProduct}>
             <svg width="16" height="16">
               <use href={sprite + "#icon-add"}></use>
             </svg>
@@ -97,12 +124,15 @@ const AllProductsPage = () => {
                     <th>{product.price}</th>
                     <th>
                       <BtnsWrpr>
-                        <ActionBtn>
+                        <ActionBtn onClick={handleEditProduct}>
                           <svg width="16" height="16">
                             <use href={sprite + "#edit"}></use>
                           </svg>
                         </ActionBtn>
-                        <ActionBtn className="delete">
+                        <ActionBtn
+                          className="delete"
+                          onClick={handleDeleteProduct}
+                        >
                           <svg width="16" height="16">
                             <use href={sprite + "#delete"}></use>
                           </svg>
@@ -133,6 +163,7 @@ const AllProductsPage = () => {
           </div>
         </PaginWrpr>
       </AllOrdersWrpr>
+      {modalIsOpen && <Modal />}
     </Container>
   );
 };
