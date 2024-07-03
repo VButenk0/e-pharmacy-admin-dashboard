@@ -64,8 +64,6 @@ export const TableWrpr = styled.div`
     width: 100%;
     height: 100%;
 
-    border-radius: 0 0 8px 8px;
-
     thead {
       color: var(--trans-text);
       font-size: 14px;
@@ -79,12 +77,6 @@ export const TableWrpr = styled.div`
       &:last-of-type {
         border-bottom: none;
       }
-    }
-
-    tbody tr th:first-of-type {
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     tr th {

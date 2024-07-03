@@ -28,15 +28,15 @@ body {
   margin: 0 auto;
 
   @media only screen and (min-width: 1440px) {
-     width: 1280px;
+     /* width: 1280px; */
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1439px) {
-     width: 768px;
+     /* width: 768px; */
   }
 
   @media only screen and (max-width: 767px) {
-     width: 375px;
+     /* width: 375px; */
   }
 }
 

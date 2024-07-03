@@ -11,8 +11,16 @@ import {
   FilterWrpr,
 } from "../AllProductsPage/AllProductsPage.styled";
 import { AddSupBtn, StatusWrpr, SupEditBtn } from "./AllSuppliersPage.styled";
+import { useDispatch } from "react-redux";
+import {
+  changeAddSupplierModal,
+  changeEditSupplierModal,
+  changeModalOpen,
+} from "../../redux/modals/modalsSlice";
 
 const AllSuppliersPage = () => {
+  const dispatch = useDispatch();
+
   const suppliers = [
     {
       supplierInfo: "Alex Shatov",
@@ -56,6 +64,16 @@ const AllSuppliersPage = () => {
     },
   ];
 
+  const handleAddSupplier = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeAddSupplierModal(true));
+  };
+
+  const handleEditSupplier = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeEditSupplierModal(true));
+  };
+
   return (
     <Container>
       <AllOrdersWrpr>
@@ -69,7 +87,7 @@ const AllSuppliersPage = () => {
               <p>Filter</p>
             </button>
           </FilterWrpr>
-          <AddSupBtn>Add a new suppliers</AddSupBtn>
+          <AddSupBtn onClick={handleAddSupplier}>Add a new suppliers</AddSupBtn>
         </FilterAndAddWrpr>
         <div>
           <TableTitle>All suppliers</TableTitle>
@@ -100,7 +118,7 @@ const AllSuppliersPage = () => {
                       </StatusWrpr>
                     </th>
                     <th>
-                      <SupEditBtn>
+                      <SupEditBtn onClick={handleEditSupplier}>
                         <svg width="16" height="16">
                           <use href={sprite + "#edit"}></use>
                         </svg>

@@ -1,12 +1,9 @@
 import {
   TableContainer,
   Table,
-  TableHeader,
-  TableRow,
-  TableCell,
-  TableBody,
   TableTitle,
-} from "./IncomeExpenses.styled";
+} from "../RecentCustomers/RecentCustomers.styled";
+import { TypeWrpr } from "./IncomeExpenses.styled";
 
 const incomeExpenses = [
   { type: "Expense", description: "Qonto billing", amount: "-49.88" },
@@ -30,29 +27,33 @@ const incomeExpenses = [
 ];
 
 const IncomeExpensesTable = () => (
-  <TableContainer>
+  <div>
     <TableTitle>Income/Expenses</TableTitle>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableCell>Type</TableCell>
-          <TableCell>Description</TableCell>
-          <TableCell>Amount</TableCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {incomeExpenses.map((entry, index) => (
-          <TableRow key={index} className={entry.type.toLowerCase()}>
-            <TableCell>
-              <div>{entry.type}</div>
-            </TableCell>
-            <TableCell>{entry.description}</TableCell>
-            <TableCell>{entry.amount}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
+    <TableContainer>
+      <Table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {incomeExpenses.map((entry, index) => (
+            <tr key={index}>
+              <th>
+                <TypeWrpr className={entry.type.toLowerCase()}>
+                  {entry.type}
+                </TypeWrpr>
+              </th>
+              <th>{entry.description}</th>
+              <th>{entry.amount}</th>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </TableContainer>
+  </div>
 );
 
 export default IncomeExpensesTable;

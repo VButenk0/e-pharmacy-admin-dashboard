@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
 import {
@@ -7,7 +7,6 @@ import {
   changeEditProductModal,
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
-import { selectIsModalOpen } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -21,11 +20,9 @@ import {
   FilterAndAddWrpr,
   FilterWrpr,
 } from "./AllProductsPage.styled";
-import Modal from "../../components/Modals/Modal/Modal";
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
-  const modalIsOpen = useSelector(selectIsModalOpen);
 
   const products = [
     {
@@ -163,7 +160,6 @@ const AllProductsPage = () => {
           </div>
         </PaginWrpr>
       </AllOrdersWrpr>
-      {modalIsOpen && <Modal />}
     </Container>
   );
 };

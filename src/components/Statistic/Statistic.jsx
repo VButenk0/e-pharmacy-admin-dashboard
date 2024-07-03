@@ -7,7 +7,7 @@ import {
 } from "./Statistic.styled";
 
 const Statistic = () => {
-  const products = "8,430";
+  const products = 8430;
   const suppliers = 211;
   const customers = 140;
 
@@ -20,7 +20,7 @@ const Statistic = () => {
           </svg>
           <p>All products</p>
         </BlockTitleWrpr>
-        <StatText>{products}</StatText>
+        <StatText>{products.toLocaleString("en-US")}</StatText>
       </BlockWrpr>
       <BlockWrpr>
         <BlockTitleWrpr>
