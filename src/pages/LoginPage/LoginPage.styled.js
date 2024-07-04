@@ -69,6 +69,7 @@ export const InputWrpr = styled.div`
     position: absolute;
     top: 13px;
     right: 18px;
+    cursor: pointer;
 
     use {
       stroke: var(--primary-text);
@@ -86,6 +87,13 @@ export const LogInBtn = styled.button`
   font-family: "Inter Medium";
   font-size: 14px;
   line-height: 1.28571;
+
+  transition: all 0.2s;
+
+  &:hover,
+  &:active {
+    background-color: var(--accent-hover);
+  }
 `;
 
 export const PillImg = styled.img`

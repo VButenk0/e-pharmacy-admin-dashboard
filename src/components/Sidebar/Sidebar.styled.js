@@ -32,10 +32,9 @@ export const StyledBtn = styled(NavLink)`
   height: 44px;
   background-color: var(--white);
 
-  transition: all 0.5s;
-
   svg {
     fill: var(--secondary-text);
+    transition: all 0.2s;
   }
 
   &.active svg {

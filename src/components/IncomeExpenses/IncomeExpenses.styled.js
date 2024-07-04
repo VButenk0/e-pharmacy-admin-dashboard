@@ -12,11 +12,11 @@ export const TypeWrpr = styled.div`
 
   &.expense {
     color: var(--accent2);
-    background-color: var(--light-red);
+    background-color: var(--light-accent2);
   }
   &.income {
     color: var(--accent);
-    background-color: var(--light-green);
+    background-color: var(--light-accent);
   }
   &.error {
     background-color: var(--border-color);

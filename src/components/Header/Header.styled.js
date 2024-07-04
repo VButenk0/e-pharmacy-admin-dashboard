@@ -53,7 +53,7 @@ export const LogoutBtn = styled.button`
   height: 44px;
   background-color: var(--accent);
 
-  transition: all 0.3s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: var(--accent-hover);

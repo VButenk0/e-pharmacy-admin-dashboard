@@ -8,6 +8,14 @@ export const AddSupBtn = styled.button`
   font-family: "Inter Medium";
   font-size: 14px;
   line-height: 1.28571;
+
+  transition: all 0.3s;
+
+  &:hover,
+  &:active {
+    border: 1px solid var(--accent-hover);
+    background-color: var(--light-accent);
+  }
 `;
 
 export const StatusWrpr = styled.div`

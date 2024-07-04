@@ -74,10 +74,14 @@ button {
   background-color: transparent;
   padding: 0;
   cursor: pointer;
+
+  font-family: "Inter Medium";
+  font-size: 14px;
+line-height: 1.28571;
 }
 
-input{
-  /* background: transparent; */
+input, select{
+  background: transparent;
   border: none;
   outline: none;
 }

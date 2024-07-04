@@ -33,6 +33,13 @@ export const FilterWrpr = styled.div`
     color: var(--white-text);
     font-size: 14px;
     line-height: 1.28571;
+
+    transition: all 0.2s;
+
+    &:hover,
+    &:active {
+      background-color: var(--accent-hover);
+    }
   }
 `;
 

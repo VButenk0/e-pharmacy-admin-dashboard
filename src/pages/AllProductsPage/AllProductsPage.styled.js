@@ -33,6 +33,13 @@ export const FilterWrpr = styled.div`
     color: var(--white-text);
     font-size: 14px;
     line-height: 1.28571;
+
+    transition: all 0.2s;
+
+    &:hover,
+    &:active {
+      background-color: var(--accent-hover);
+    }
   }
 `;
 
@@ -45,12 +52,20 @@ export const AddBtn = styled.button`
   font-size: 14px;
   line-height: 1.28571;
 
+  &:hover,
+  &:active {
+    svg {
+      background-color: var(--accent-hover);
+    }
+  }
   svg {
     width: 42px;
     height: 42px;
     padding: 13px;
     border-radius: 50%;
     background-color: var(--accent);
+
+    transition: all 0.2s;
   }
 `;
 

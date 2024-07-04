@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 import {
   HeaderWrpr,
@@ -10,6 +10,25 @@ import {
 } from "./Header.styled";
 
 const Header = () => {
+  const location = useLocation();
+  const page = location.pathname;
+
+  const getPageTitle = (path) => {
+    const routes = {
+      "/dashboard": "Dashboard",
+      "/orders": "All orders",
+      "/products": "All products",
+      "/suppliers": "All suppliers",
+      "/customers": "All customers",
+    };
+    return routes[path] || "Unknown page";
+  };
+
+  const currentPageTitle = getPageTitle(page);
+
+  const email = "vendor@gmail.com";
+  // Add here a selector
+
   return (
     <HeaderWrpr>
       <LogoTitleWrpr>
@@ -19,9 +38,9 @@ const Header = () => {
         <TitleWrpr>
           <Title>Medicine store</Title>
           <SubTitleWrpr>
-            <p>All suppliers</p>
+            <p>{currentPageTitle}</p>
             <p>|</p>
-            <p>vendor@gmail.com</p>
+            <p>{email}</p>
           </SubTitleWrpr>
         </TitleWrpr>
       </LogoTitleWrpr>

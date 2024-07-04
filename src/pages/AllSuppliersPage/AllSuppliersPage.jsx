@@ -1,5 +1,11 @@
+import { useDispatch } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import {
+  changeAddSupplierModal,
+  changeEditSupplierModal,
+  changeModalOpen,
+} from "../../redux/modals/modalsSlice";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -11,12 +17,6 @@ import {
   FilterWrpr,
 } from "../AllProductsPage/AllProductsPage.styled";
 import { AddSupBtn, StatusWrpr, SupEditBtn } from "./AllSuppliersPage.styled";
-import { useDispatch } from "react-redux";
-import {
-  changeAddSupplierModal,
-  changeEditSupplierModal,
-  changeModalOpen,
-} from "../../redux/modals/modalsSlice";
 
 const AllSuppliersPage = () => {
   const dispatch = useDispatch();
