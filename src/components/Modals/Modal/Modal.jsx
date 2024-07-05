@@ -4,11 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Fade } from "@mui/material";
 import sprite from "../../../assets/sprite.svg";
 import { closeModals } from "../../../redux/modals/modalsSlice";
-import AddNewProduct from "../AddNewProduct/AddNewProduct";
-import EditProductData from "../EditProductData/EditProductData";
 import Logout from "../Logout/Logout";
-import AddNewSupplier from "../AddNewSupplier/AddNewSupplier";
-import EditSupplierData from "../EditSupplierData/EditSupplierData";
 import {
   selectAddProductModal,
   selectAddSupplierModal,
@@ -18,8 +14,10 @@ import {
   selectIsModalOpen,
   selectLogoutModal,
 } from "../../../redux/selectors";
-import { BtnClose, ModalContainer, ModalStyled, Overlay } from "./Modal.styled";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
+import AddEditProduct from "../AddEditProduct/AddEditProduct";
+import AddEditSupplier from "../AddEditSupplier/AddEditSupplier";
+import { BtnClose, ModalContainer, ModalStyled, Overlay } from "./Modal.styled";
 
 const Modal = () => {
   const dispatch = useDispatch();
@@ -70,11 +68,9 @@ const Modal = () => {
         <ModalContainer>
           <Fade in={modalIsOpen} timeout={700}>
             <ModalStyled>
-              {addProductModal && <AddNewProduct />}
-              {editProductModal && <EditProductData />}
+              {(addProductModal || editProductModal) && <AddEditProduct />}
               {deleteProductModal && <DeleteProduct />}
-              {addSupplierModal && <AddNewSupplier />}
-              {editSupplierModal && <EditSupplierData />}
+              {(addSupplierModal || editSupplierModal) && <AddEditSupplier />}
               {logoutModal && <Logout />}
 
               <BtnClose type="button" onClick={closeModal}>

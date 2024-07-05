@@ -18,11 +18,9 @@ export const InputsWrpr = styled.div`
   grid-template-rows: auto;
   grid-column-gap: 8px;
   grid-row-gap: 14px;
-
   padding-bottom: 40px;
 
-  input,
-  select {
+  input {
     width: 224px;
     height: 44px;
     border-radius: 60px;
@@ -31,14 +29,6 @@ export const InputsWrpr = styled.div`
   }
 
   input::placeholder {
-    color: var(--trans-text);
-  }
-
-  select {
-    color: var(--primary-text);
-  }
-
-  select option[value=""][disabled] {
     color: var(--trans-text);
   }
 `;

@@ -81,7 +81,7 @@ line-height: 1.28571;
 }
 
 input, select{
-  background: transparent;
+  /* background: transparent; */
   border: none;
   outline: none;
 }
