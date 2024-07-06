@@ -1,26 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
+import { styled } from "@mui/system";
+import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { closeModals } from "../../../redux/modals/modalsSlice";
+import { selectAddProductModal } from "../../../redux/selectors";
 import {
   ButtonsWrpr,
   InputsWrpr,
   ModalTitle,
   ModalWrpr,
+  StyledInput,
 } from "./AddEditProduct.styled";
-import {
-  selectAddProductModal,
-  // selectEditProductModal,
-} from "../../../redux/selectors";
-import {
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
-import { styled } from "@mui/system";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -46,10 +38,22 @@ const StyledFormControl = styled(FormControl)({
   },
 });
 
+const StyledMenuItem = styled(MenuItem)({
+  color: "#FFFFFF80",
+  fontFamily: "Inter Regular",
+  fontSize: "12px",
+  lineHeight: "1.5",
+  "&.Mui-selected": {
+    color: "#FFFFFF",
+  },
+  "&.Mui-selected:hover": {
+    backgroundColor: "transparent",
+  },
+});
+
 const AddEditProduct = () => {
   const dispatch = useDispatch();
   const addProductModal = useSelector(selectAddProductModal);
-  // const editProductModal = useSelector(selectEditProductModal);
 
   const validationSchema = Yup.object().shape({
     prodInfo: Yup.string().required("Product Info is required"),
@@ -70,11 +74,9 @@ const AddEditProduct = () => {
   const onSubmit = (data) => {
     dispatch(closeModals());
     if (addProductModal) {
-      // dispatch(addProductThunk(data))
-      console.log(`Added a product with this parameters: ${data}`);
+      console.log("Added a product with this parameters:", data);
     } else {
-      // dispatch(editProductThunk(data))
-      console.log(`Edited a product with this parameters: ${data}`);
+      console.log("Edited a product with this parameters:", data);
     }
   };
 
@@ -87,7 +89,7 @@ const AddEditProduct = () => {
       </ModalTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputsWrpr>
-          <input
+          <StyledInput
             type="text"
             placeholder="Product Info"
             {...register("prodInfo")}
@@ -96,49 +98,63 @@ const AddEditProduct = () => {
 
           <StyledFormControl variant="outlined">
             <Select
-              defaultValue={""}
+              defaultValue=""
+              displayEmpty
               {...register("category")}
               input={<OutlinedInput notched={false} />}
-              sx={{ height: "100%" }}
+              sx={{
+                height: "100%",
+                fontSize: "12px",
+                fontFamily: "Inter Regular",
+                lineHeight: "1.5",
+              }}
               MenuProps={{
                 PaperProps: {
                   style: {
                     marginTop: "8px",
                     backgroundColor: "var(--accent)",
                     borderRadius: "15px",
+                    maxHeight: "140px",
                   },
                 },
               }}
+              renderValue={(selected) => {
+                if (!selected) {
+                  return (
+                    <span
+                      style={{
+                        color: "var(--trans-text)",
+                        fontSize: "12px",
+                        fontFamily: "Inter Regular",
+                      }}
+                    >
+                      Category
+                    </span>
+                  );
+                }
+                return selected;
+              }}
             >
-              <MenuItem value={""} disabled hidden>
-                Category
-              </MenuItem>
               {categories.map((category, index) => (
-                <MenuItem
-                  key={index}
-                  value={category}
-                  style={{
-                    color: "#FFFFFF80",
-                  }}
-                >
+                <StyledMenuItem key={index} value={category}>
                   {category}
-                </MenuItem>
+                </StyledMenuItem>
               ))}
             </Select>
           </StyledFormControl>
           {errors.category && <p>{errors.category.message}</p>}
 
-          <input type="text" placeholder="Stock" {...register("stock")} />
+          <StyledInput type="text" placeholder="Stock" {...register("stock")} />
           {errors.stock && <p>{errors.stock.message}</p>}
 
-          <input
+          <StyledInput
             type="text"
             placeholder="Suppliers"
             {...register("suppliers")}
           />
           {errors.suppliers && <p>{errors.suppliers.message}</p>}
 
-          <input type="text" placeholder="Price" {...register("price")} />
+          <StyledInput type="text" placeholder="Price" {...register("price")} />
           {errors.price && <p>{errors.price.message}</p>}
         </InputsWrpr>
         <ButtonsWrpr>

@@ -10,8 +10,10 @@ export const HeaderWrpr = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
 
   padding: 15px 40px 15px 20px;
+  background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
 `;
 

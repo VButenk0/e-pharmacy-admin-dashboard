@@ -8,6 +8,19 @@ export const Global = createGlobalStyle`
   padding: 0;
 
   user-select: none;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color:#FFFFFF66;
+    border-radius: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 }
 
 body {
@@ -23,12 +36,12 @@ body {
 
   min-width: 320px;
   max-width: 1440px;
-  /* max-height: 100vh; */
+  max-height: 100vh;
 
   margin: 0 auto;
 
   @media only screen and (min-width: 1440px) {
-     /* width: 1280px; */
+     /* width: 1440px; */
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1439px) {
