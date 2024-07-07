@@ -13,6 +13,7 @@ import { configureStore } from "@reduxjs/toolkit";
 //   REGISTER,
 // } from "redux-persist";
 import { modalsReducer } from "./modals/modalsSlice";
+import { dataReducer } from "./data/dataSlice";
 
 // const authPersistConfig = {
 //   key: "auth",
@@ -45,7 +46,7 @@ import { modalsReducer } from "./modals/modalsSlice";
 export const store = configureStore({
   reducer: {
     // authSlice: persistedAuthReducer,
-    // booksSlice: persistedBooksReducer,
+    dataSlice: dataReducer,
     modalsSlice: modalsReducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
 import {
@@ -7,6 +8,7 @@ import {
   changeEditProductModal,
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
+import { selectProducts } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -23,48 +25,31 @@ import {
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const products = [
-    {
-      productInfo: "Moringa",
-      category: "Medicine",
-      stock: "12",
-      suppliers: "Square",
-      price: "89.66",
-    },
-    {
-      productInfo: "Antibiotic 250 mg",
-      category: "Heart",
-      stock: "19",
-      suppliers: "Acme",
-      price: "34.16",
-    },
-    {
-      productInfo: "Headache Relief",
-      category: "Head",
-      stock: "09",
-      suppliers: "Beximco",
-      price: "53.76",
-    },
-    {
-      productInfo: "Pharmacy",
-      category: "Hand",
-      stock: "14",
-      suppliers: "ACI",
-      price: "28.57",
-    },
-    {
-      productInfo: "Magnesium",
-      category: "Leg",
-      stock: "10",
-      suppliers: "Uniliver",
-      price: "56.34",
-    },
-  ];
+  const products = useSelector(selectProducts);
 
   const handleAddProduct = () => {
     dispatch(changeModalOpen(true));
     dispatch(changeAddProductModal(true));
+  };
+
+  useEffect(() => {
+    if (filter === "") setFilteredProducts(products);
+  }, [filter, products]);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    setFilteredProducts(
+      products.filter((product) =>
+        product.productInfo.toLowerCase().includes(filter.toLowerCase())
+      )
+    );
   };
 
   const handleEditProduct = () => {
@@ -82,8 +67,13 @@ const AllProductsPage = () => {
       <AllOrdersWrpr>
         <FilterAndAddWrpr>
           <FilterWrpr>
-            <input type="text" placeholder="User Name" />
-            <button>
+            <input
+              type="text"
+              placeholder="Product Name"
+              value={filter}
+              onChange={handleFilterChange}
+            />
+            <button onClick={handleFilterSubmit}>
               <svg width="14" height="14">
                 <use href={sprite + "#filter"}></use>
               </svg>
@@ -112,7 +102,7 @@ const AllProductsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {filteredProducts.map((product, index) => (
                   <tr key={index}>
                     <th>{product.productInfo}</th>
                     <th>{product.category}</th>

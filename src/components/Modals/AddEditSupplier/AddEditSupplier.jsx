@@ -6,6 +6,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { styled } from "@mui/system";
 import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { useState } from "react";
 import { selectAddSupplierModal } from "../../../redux/selectors";
 import { closeModals } from "../../../redux/modals/modalsSlice";
 import {
@@ -57,31 +59,30 @@ const StyledDatePicker = styled(DatePicker)({
   width: "224px",
   height: "44px",
   borderRadius: "60px",
-  border: "1px solid var(--border-color)", // залишаємо це, якщо потрібен власний бордер
+  border: "1px solid var(--border-color)",
   "& .MuiOutlinedInput-root": {
-    border: "none", // видаляємо стандартний бордер
-    boxShadow: "none", // видаляємо стандартну тінь
+    border: "none",
+    boxShadow: "none",
     "&:hover": {
-      border: "none", // видаляємо бордер при наведенні
+      border: "none",
     },
     "&.Mui-focused": {
-      border: "none", // видаляємо бордер при фокусі
+      border: "none",
     },
   },
   "& .MuiInputBase-input": {
     padding: "0 18px",
     display: "flex",
     alignItems: "center",
-    border: "none", // видаляємо бордер у введенні
-    outline: "none", // видаляємо стандартний обведення
-    boxShadow: "none", // видаляємо стандартну тінь
+    border: "none",
+    outline: "none",
+    boxShadow: "none",
   },
 });
 
 const AddEditSupplier = () => {
   const dispatch = useDispatch();
   const addSupplierModal = useSelector(selectAddSupplierModal);
-  // const editSupplierModal = useSelector(selectEditSupplierModal);
 
   const validationSchema = Yup.object().shape({
     supInfo: Yup.string().required("Suppliers Info is required"),
@@ -96,18 +97,24 @@ const AddEditSupplier = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const onSubmit = (data) => {
+    const formattedDate = selectedDate
+      ? dayjs(selectedDate).format("MMMM D, YYYY")
+      : null;
+    data.delivDate = formattedDate;
+
     dispatch(closeModals());
     if (addSupplierModal) {
-      // dispatch(addProductThunk(data))
-      console.log(`Added a product with this parameters: ${data}`);
+      console.log(`Added a product with this parameters:`, data);
     } else {
-      // dispatch(editProductThunk(data))
-      console.log(`Edited a product with this parameters: ${data}`);
+      console.log(`Edited a product with this parameters:`, data);
     }
   };
 
@@ -141,13 +148,23 @@ const AddEditSupplier = () => {
           />
           {errors.company && <p>{errors.company.message}</p>}
 
-          {/* <input
-            type="text"
-            placeholder="Delivery date"
-            {...register("delivDate")}
-          /> */}
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledDatePicker {...register("delivDate")} />
+            <StyledDatePicker
+              value={selectedDate}
+              onChange={(date) => {
+                setSelectedDate(date);
+                setValue("delivDate", date, { shouldValidate: true });
+              }}
+              renderInput={(params) => (
+                <StyledInput
+                  {...params}
+                  inputProps={{
+                    ...params.inputProps,
+                    placeholder: "Delivery date", // Custom placeholder
+                  }}
+                />
+              )}
+            />
           </LocalizationProvider>
           {errors.delivDate && <p>{errors.delivDate.message}</p>}
 

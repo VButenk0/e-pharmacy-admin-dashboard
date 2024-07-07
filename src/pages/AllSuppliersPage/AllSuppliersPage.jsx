@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
 import {
@@ -6,6 +7,7 @@ import {
   changeEditSupplierModal,
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
+import { selectSuppliers } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -20,49 +22,27 @@ import { AddSupBtn, StatusWrpr, SupEditBtn } from "./AllSuppliersPage.styled";
 
 const AllSuppliersPage = () => {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState("");
+  const [filteredSuppliers, setFilteredSuppliers] = useState([]);
 
-  const suppliers = [
-    {
-      supplierInfo: "Alex Shatov",
-      address: "Mripur-1",
-      company: "Square",
-      deliveryDate: "August 1, 2023",
-      ammount: "6952.53",
-      status: "Active",
-    },
-    {
-      supplierInfo: "Philip Harbach",
-      address: "Dhonmondi",
-      company: "Acme",
-      deliveryDate: "August 1, 2023",
-      ammount: "8527.58",
-      status: "Active",
-    },
-    {
-      supplierInfo: "Mirko Fisuk",
-      address: "Uttara-6",
-      company: "Beximco",
-      deliveryDate: "August 1, 2023",
-      ammount: "2698.50",
-      status: "Active",
-    },
-    {
-      supplierInfo: "Olga Semklo",
-      address: "Gulshan-1",
-      company: "ACI",
-      deliveryDate: "August 1, 2023",
-      ammount: "9852.64",
-      status: "Active",
-    },
-    {
-      supplierInfo: "Burak Long",
-      address: "Mirpur-12",
-      company: "Uniliver",
-      deliveryDate: "August 1, 2023",
-      ammount: "1736.90",
-      status: "Deactive",
-    },
-  ];
+  const suppliers = useSelector(selectSuppliers);
+
+  useEffect(() => {
+    if (filter === "") setFilteredSuppliers(suppliers);
+  }, [filter, suppliers]);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    setFilteredSuppliers(
+      suppliers.filter((supplier) =>
+        supplier.user.toLowerCase().includes(filter.toLowerCase())
+      )
+    );
+  };
 
   const handleAddSupplier = () => {
     dispatch(changeModalOpen(true));
@@ -79,8 +59,12 @@ const AllSuppliersPage = () => {
       <AllOrdersWrpr>
         <FilterAndAddWrpr>
           <FilterWrpr>
-            <input type="text" placeholder="User Name" />
-            <button>
+            <input
+              type="text"
+              placeholder="User Name"
+              onChange={handleFilterChange}
+            />
+            <button onClick={handleFilterSubmit}>
               <svg width="14" height="14">
                 <use href={sprite + "#filter"}></use>
               </svg>
@@ -105,9 +89,9 @@ const AllSuppliersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {suppliers.map((supplier, index) => (
+                {filteredSuppliers.map((supplier, index) => (
                   <tr key={index}>
-                    <th>{supplier.supplierInfo}</th>
+                    <th>{supplier.user}</th>
                     <th>{supplier.address}</th>
                     <th>{supplier.company}</th>
                     <th>{supplier.deliveryDate}</th>

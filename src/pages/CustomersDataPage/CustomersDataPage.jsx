@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import { selectCustomers } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   FilterWrpr,
@@ -9,50 +12,38 @@ import {
 } from "../AllOrdersPage/AllOrdersPage.styled";
 
 const CustomersDataPage = () => {
-  const customers = [
-    {
-      user: "Alex Shatov",
-      email: "alexshatov@gmail.com",
-      address: "Mripur-1",
-      phone: "+8801736985253",
-      date: "Aug 1, 2023",
-    },
-    {
-      user: "Philip Harbach",
-      email: "philip.h@gmail.com",
-      address: "Dhonmondi",
-      phone: "+8801636985275",
-      date: "Aug 1, 2023",
-    },
-    {
-      user: "Mirko Fisuk",
-      email: "mirkofisuk@gmail.com",
-      address: "Uttara-6",
-      phone: "+8801336985214",
-      date: "Aug 1, 2023",
-    },
-    {
-      user: "Olga Semklo",
-      email: "olga.s@cool.design",
-      address: "Gulshan-1",
-      phone: "+8801736985264",
-      date: "Aug 1, 2023",
-    },
-    {
-      user: "Burak Long",
-      email: "longburak@gmail.com",
-      address: "Mirpur-12",
-      phone: "+8801736984514",
-      date: "Aug 1, 2023",
-    },
-  ];
+  const [filter, setFilter] = useState("");
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
+
+  const customers = useSelector(selectCustomers);
+
+  useEffect(() => {
+    if (filter === "") setFilteredCustomers(customers);
+  }, [filter, customers]);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    setFilteredCustomers(
+      customers.filter((customer) =>
+        customer.user.toLowerCase().includes(filter.toLowerCase())
+      )
+    );
+  };
 
   return (
     <Container>
       <AllOrdersWrpr>
         <FilterWrpr>
-          <input type="text" placeholder="User Name" />
-          <button>
+          <input
+            type="text"
+            placeholder="User Name"
+            onChange={handleFilterChange}
+          />
+          <button onClick={handleFilterSubmit}>
             <svg width="14" height="14">
               <use href={sprite + "#filter"}></use>
             </svg>
@@ -73,7 +64,7 @@ const CustomersDataPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer, index) => (
+                {filteredCustomers.map((customer, index) => (
                   <tr key={index}>
                     <th>{customer.user}</th>
                     <th>{customer.email}</th>
