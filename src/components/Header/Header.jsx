@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 import {
   HeaderWrpr,
@@ -8,8 +8,14 @@ import {
   Title,
   TitleWrpr,
 } from "./Header.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmail, selectIsLogged } from "../../redux/selectors";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const email = useSelector(selectEmail);
+  const isLogged = useSelector(selectIsLogged);
   const location = useLocation();
   const page = location.pathname;
 
@@ -26,25 +32,27 @@ const Header = () => {
 
   const currentPageTitle = getPageTitle(page);
 
-  const email = "vendor@gmail.com";
-  // Add here a selector
+  const handleLogoutClick = () => {
+    dispatch();
+    navigate("/login");
+  };
 
   return (
     <HeaderWrpr>
       <LogoTitleWrpr>
-        <Link to={"/dashboard"}>
+        <Link to={`/${isLogged ? "dashboard" : "login"}`}>
           <img src="/logo.svg" alt="Logo" width={40} height={40} />
         </Link>
         <TitleWrpr>
           <Title>Medicine store</Title>
           <SubTitleWrpr>
-            <p>{currentPageTitle}</p>
+            <Link to={`${page}`}>{currentPageTitle}</Link>
             <p>|</p>
             <p>{email}</p>
           </SubTitleWrpr>
         </TitleWrpr>
       </LogoTitleWrpr>
-      <LogoutBtn>
+      <LogoutBtn onClick={handleLogoutClick}>
         <svg width="16" height="16">
           <use href={sprite + "#logout"}></use>
         </svg>

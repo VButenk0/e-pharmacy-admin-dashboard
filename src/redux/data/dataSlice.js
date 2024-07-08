@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const dataSlice = createSlice({
   name: "data",
   initialState: {
+    statistics: { allProducts: 0, allSuppliers: 0, allCustomers: 0 },
+    recentCustomers: [],
+    incomeExpenses: [],
     orders: [
       {
         user: "Alex Shatov",

@@ -19,7 +19,6 @@ export const ModalContainer = styled.div`
 
 export const ModalStyled = styled.div`
   width: 536px;
-  min-height: 392px;
   overflow-y: auto;
   max-height: 90vh;
   z-index: 2000;
