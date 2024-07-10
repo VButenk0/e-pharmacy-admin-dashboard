@@ -22,6 +22,7 @@ import {
   FilterAndAddWrpr,
   FilterWrpr,
 } from "./AllProductsPage.styled";
+import { changeSelectedItem } from "../../redux/data/dataSlice";
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,17 @@ const AllProductsPage = () => {
     );
   };
 
-  const handleEditProduct = () => {
+  const handleEditProduct = (product) => {
+    dispatch(
+      changeSelectedItem({
+        _id: product._id,
+        productInfo: product.productInfo,
+        category: product.category,
+        stock: product.stock,
+        suppliers: product.suppliers,
+        price: product.price,
+      })
+    );
     dispatch(changeModalOpen(true));
     dispatch(changeEditProductModal(true));
   };
@@ -111,7 +122,7 @@ const AllProductsPage = () => {
                     <th>{product.price}</th>
                     <th>
                       <BtnsWrpr>
-                        <ActionBtn onClick={handleEditProduct}>
+                        <ActionBtn onClick={handleEditProduct(product)}>
                           <svg width="16" height="16">
                             <use href={sprite + "#edit"}></use>
                           </svg>

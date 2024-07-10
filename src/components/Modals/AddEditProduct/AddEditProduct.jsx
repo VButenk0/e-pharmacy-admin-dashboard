@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { closeModals } from "../../../redux/modals/modalsSlice";
-import { selectAddProductModal } from "../../../redux/selectors";
+import {
+  selectAddProductModal,
+  selectSelectedItem,
+} from "../../../redux/selectors";
 import {
   ButtonsWrpr,
   InputsWrpr,
@@ -13,6 +16,10 @@ import {
   ModalWrpr,
   StyledInput,
 } from "./AddEditProduct.styled";
+import {
+  addProductThunk,
+  editProductThunk,
+} from "../../../redux/data/operations";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -54,13 +61,16 @@ const StyledMenuItem = styled(MenuItem)({
 const AddEditProduct = () => {
   const dispatch = useDispatch();
   const addProductModal = useSelector(selectAddProductModal);
+  const selectedItem = useSelector(selectSelectedItem);
+
+  const { _id, productInfo, category, stock, suppliers, price } = selectedItem;
 
   const validationSchema = Yup.object().shape({
     prodInfo: Yup.string().required("Product Info is required"),
-    stock: Yup.string().required("Stock is required"),
-    price: Yup.string().required("Price is required"),
     category: Yup.string().required("Category is required"),
+    stock: Yup.string().required("Stock is required"),
     suppliers: Yup.string().required("Suppliers is required"),
+    price: Yup.string().required("Price is required"),
   });
 
   const {
@@ -72,12 +82,14 @@ const AddEditProduct = () => {
   });
 
   const onSubmit = (data) => {
-    dispatch(closeModals());
     if (addProductModal) {
+      dispatch(addProductThunk());
       console.log("Added a product with this parameters:", data);
     } else {
+      dispatch(editProductThunk(_id));
       console.log("Edited a product with this parameters:", data);
     }
+    dispatch(closeModals());
   };
 
   const categories = ["Medicine", "Heart", "Head", "Hand", "Leg"];
@@ -92,13 +104,14 @@ const AddEditProduct = () => {
           <StyledInput
             type="text"
             placeholder="Product Info"
+            defaultValue={addProductModal ? productInfo : ""}
             {...register("prodInfo")}
           />
           {errors.prodInfo && <p>{errors.prodInfo.message}</p>}
 
           <StyledFormControl variant="outlined">
             <Select
-              defaultValue=""
+              defaultValue={addProductModal ? category : ""}
               displayEmpty
               {...register("category")}
               input={<OutlinedInput notched={false} />}
@@ -144,17 +157,28 @@ const AddEditProduct = () => {
           </StyledFormControl>
           {errors.category && <p>{errors.category.message}</p>}
 
-          <StyledInput type="text" placeholder="Stock" {...register("stock")} />
+          <StyledInput
+            type="text"
+            placeholder="Stock"
+            defaultValue={addProductModal ? stock : ""}
+            {...register("stock")}
+          />
           {errors.stock && <p>{errors.stock.message}</p>}
 
           <StyledInput
             type="text"
             placeholder="Suppliers"
+            defaultValue={addProductModal ? suppliers : ""}
             {...register("suppliers")}
           />
           {errors.suppliers && <p>{errors.suppliers.message}</p>}
 
-          <StyledInput type="text" placeholder="Price" {...register("price")} />
+          <StyledInput
+            type="text"
+            placeholder="Price"
+            defaultValue={addProductModal ? price : ""}
+            {...register("price")}
+          />
           {errors.price && <p>{errors.price.message}</p>}
         </InputsWrpr>
         <ButtonsWrpr>

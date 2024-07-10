@@ -50,11 +50,13 @@ export const dataSlice = createSlice({
     ],
     products: [
       {
-        productInfo: "Moringa",
-        category: "Medicine",
-        stock: "12",
+        _id: "668bd22469dce47cf8f2a54a",
+        photo: "https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg",
+        name: "Aspirin",
         suppliers: "Square",
+        stock: "12",
         price: "89.66",
+        category: "Medicine",
       },
       {
         productInfo: "Antibiotic 250 mg",
@@ -164,14 +166,20 @@ export const dataSlice = createSlice({
         date: "Aug 1, 2023",
       },
     ],
+    selectedItem: {},
     isLoading: false,
     isError: null,
   },
 
-  reducers: {},
+  reducers: {
+    changeSelectedItem: (state, { payload }) => {
+      state.selectedItem = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder;
   },
 });
 
+export const { changeSelectedItem } = dataSlice.actions;
 export const dataReducer = dataSlice.reducer;
