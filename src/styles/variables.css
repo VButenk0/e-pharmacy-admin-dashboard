@@ -23,6 +23,10 @@
   --cancelled-bg: #e850501a;
   --processing: #70a6e8;
   --processing-bg: #70a6e81a;
+  --delivered: #2be6e6;
+  --delivered-bg: #2be6e61a;
+  --shipped: #e8d84b;
+  --shipped-bg: #e8d84b1a;
 
   --bg-color: #f7f8fa;
   --tab-bg: #e7f1ed;

@@ -5,6 +5,7 @@ export const TableTitle = styled.h2`
   border-radius: 8px 8px 0 0;
   font-family: "Inter SemiBold";
   font-size: 18px;
+  font-weight: 600;
   line-height: 1.33333;
   padding: 20px;
 `;
@@ -16,6 +17,9 @@ export const TableContainer = styled.div`
   height: 512px;
   padding: 0 20px;
   border: 1px solid var(--border-color);
+
+  overflow-x: auto;
+  -webkit-overflow-scrolling: auto;
 `;
 
 export const Table = styled.table`
@@ -25,9 +29,18 @@ export const Table = styled.table`
   border-radius: 0 0 8px 8px;
 
   thead {
+    position: sticky;
+    top: 0;
+    background-color: var(--white);
+
     color: var(--trans-text);
     font-size: 14px;
+    font-weight: 500;
     line-height: 1.28571;
+
+    tr {
+      border-bottom: 1px solid var(--border-color);
+    }
   }
 
   tr th {
@@ -36,6 +49,7 @@ export const Table = styled.table`
     text-align: left;
     font-family: "Inter Medium";
     font-size: 16px;
+    font-weight: 500;
     line-height: 1.125;
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
@@ -48,6 +62,10 @@ export const Table = styled.table`
       border-right: none;
       padding-right: 0;
     }
+  }
+
+  tbody {
+    overflow-x: auto;
   }
 
   tbody tr {

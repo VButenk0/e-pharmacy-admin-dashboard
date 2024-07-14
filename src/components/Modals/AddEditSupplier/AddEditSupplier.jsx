@@ -85,10 +85,10 @@ const AddEditSupplier = () => {
   const addSupplierModal = useSelector(selectAddSupplierModal);
 
   const validationSchema = Yup.object().shape({
-    supInfo: Yup.string().required("Suppliers Info is required"),
+    name: Yup.string().required("Suppliers Info is required"),
     address: Yup.string().required("Address is required"),
-    company: Yup.string().required("Company is required"),
-    delivDate: Yup.string().required("Delivery date is required"),
+    suppliers: Yup.string().required("Company is required"),
+    date: Yup.string().required("Delivery date is required"),
     ammount: Yup.string().required("Ammount is required"),
     status: Yup.string().required("Status is required"),
   });
@@ -130,9 +130,9 @@ const AddEditSupplier = () => {
           <StyledInput
             type="text"
             placeholder="Suppliers Info"
-            {...register("supInfo")}
+            {...register("name")}
           />
-          {errors.supInfo && <p>{errors.supInfo.message}</p>}
+          {errors.name && <p>{errors.name.message}</p>}
 
           <StyledInput
             type="text"
@@ -144,16 +144,16 @@ const AddEditSupplier = () => {
           <StyledInput
             type="text"
             placeholder="Company"
-            {...register("company")}
+            {...register("suppliers")}
           />
-          {errors.company && <p>{errors.company.message}</p>}
+          {errors.suppliers && <p>{errors.suppliers.message}</p>}
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StyledDatePicker
               value={selectedDate}
               onChange={(date) => {
                 setSelectedDate(date);
-                setValue("delivDate", date, { shouldValidate: true });
+                setValue("date", date, { shouldValidate: true });
               }}
               renderInput={(params) => (
                 <StyledInput
@@ -166,7 +166,7 @@ const AddEditSupplier = () => {
               )}
             />
           </LocalizationProvider>
-          {errors.delivDate && <p>{errors.delivDate.message}</p>}
+          {errors.date && <p>{errors.date.message}</p>}
 
           <StyledInput
             type="text"

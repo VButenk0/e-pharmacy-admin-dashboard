@@ -18,6 +18,10 @@ export const FilterWrpr = styled.div`
     height: 44px;
     border-radius: 60px;
     padding: 0 18px;
+
+    &::placeholder {
+      color: var(--trans-text);
+    }
   }
 
   button {
@@ -32,6 +36,7 @@ export const FilterWrpr = styled.div`
 
     color: var(--white-text);
     font-size: 14px;
+    font-weight: 500;
     line-height: 1.28571;
 
     transition: all 0.2s;
@@ -48,32 +53,35 @@ export const TableTitle = styled.h2`
   border-radius: 8px 8px 0 0;
   width: 100%;
 
-  font-size: 18px;
   font-family: "Inter SemiBold";
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.33333;
 
   padding: 20px;
 `;
 
 export const TableWrpr = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 1280px;
+  height: 438px;
   border-radius: 0 0 8px 8px;
   padding: 0 20px;
   background-color: var(--white);
-  border-top: none;
   border: 1px solid var(--border-color);
+  border-top: none;
+
+  overflow: hidden;
 
   table {
     border-collapse: collapse;
     background-color: var(--white);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 
     thead {
       color: var(--trans-text);
       font-size: 14px;
+      font-weight: 500;
       line-height: 1.28571;
     }
 
@@ -92,6 +100,7 @@ export const TableWrpr = styled.div`
       text-align: left;
       font-family: "Inter Medium";
       font-size: 16px;
+      font-weight: 500;
       line-height: 1.125;
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
@@ -142,16 +151,24 @@ export const OrderStatusWrpr = styled.div`
     color: var(--processing);
     background-color: var(--processing-bg);
   }
+  &.delivered {
+    color: var(--delivered);
+    background-color: var(--delivered-bg);
+  }
+  &.shipped {
+    color: var(--shipped);
+    background-color: var(--shipped-bg);
+  }
 `;
 
 export const PaginWrpr = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  /* gap: 8px; */
 
   margin: 0 auto;
 
-  div {
+  /* div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,5 +185,12 @@ export const PaginWrpr = styled.div`
         background-color: var(--accent);
       }
     }
-  }
+  } */
+`;
+
+export const ImageNameWrpr = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
 `;

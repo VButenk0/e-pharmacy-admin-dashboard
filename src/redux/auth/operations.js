@@ -5,7 +5,7 @@ export const loginThunk = createAsyncThunk(
   "auth/login",
   async (credentials, thunkApi) => {
     try {
-      const { data } = await api.post("/users/signup", credentials);
+      const { data } = await api.post("/user/login", credentials);
       setToken(data.token);
       return data;
     } catch (error) {
@@ -19,7 +19,7 @@ export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (_, thunkApi) => {
     try {
-      await api.post("api/auth/logout");
+      await api.get("/user/logout");
       clearToken();
       //   toast.success("Logout successfully");
     } catch (error) {
@@ -33,7 +33,7 @@ export const userInfoThunk = createAsyncThunk(
   "auth/userInfo",
   async (credentials, ThunkAPI) => {
     try {
-      const { data } = await api.patch(`api/auth/user`, credentials);
+      const { data } = await api.get(`/user/user-info`, credentials);
       return data;
     } catch (error) {
       //   toast.error(error.message);

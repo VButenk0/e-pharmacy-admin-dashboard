@@ -1,4 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  addProductThunk,
+  addSupplierThunk,
+  deleteProductThunk,
+  editProductThunk,
+  editSupplierThunk,
+  getCustomerInfoThunk,
+  getCustomersThunk,
+  getDashboardInfoThunk,
+  getOrdersThunk,
+  getProductsThunk,
+  getSuppliersThunk,
+} from "./operations";
 
 export const dataSlice = createSlice({
   name: "data",
@@ -6,167 +19,13 @@ export const dataSlice = createSlice({
     statistics: { allProducts: 0, allSuppliers: 0, allCustomers: 0 },
     recentCustomers: [],
     incomeExpenses: [],
-    orders: [
-      {
-        user: "Alex Shatov",
-        address: "Mripur-1",
-        products: "12",
-        date: "July 31, 2023",
-        price: "890.66",
-        status: "Completed",
-      },
-      {
-        user: "Philip Harbach",
-        address: "Dhonmondi",
-        products: "19",
-        date: "July 31, 2023",
-        price: "340.16",
-        status: "Confirmed",
-      },
-      {
-        user: "Mirko Fisuk",
-        address: "Uttara-6",
-        products: "09",
-        date: "July 31, 2023",
-        price: "530.76",
-        status: "Pending",
-      },
-      {
-        user: "Olga Semklo",
-        address: "Gulshan-1",
-        products: "14",
-        date: "July 31, 2023",
-        price: "280.57",
-        status: "Cancelled",
-      },
-      {
-        user: "Burak Long",
-        address: "Mirpur-12",
-        products: "10",
-        date: "July 31, 2023",
-        price: "567.34",
-        status: "Processing",
-      },
-    ],
-    products: [
-      {
-        _id: "668bd22469dce47cf8f2a54a",
-        photo: "https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg",
-        name: "Aspirin",
-        suppliers: "Square",
-        stock: "12",
-        price: "89.66",
-        category: "Medicine",
-      },
-      {
-        productInfo: "Antibiotic 250 mg",
-        category: "Heart",
-        stock: "19",
-        suppliers: "Acme",
-        price: "34.16",
-      },
-      {
-        productInfo: "Headache Relief",
-        category: "Head",
-        stock: "09",
-        suppliers: "Beximco",
-        price: "53.76",
-      },
-      {
-        productInfo: "Pharmacy",
-        category: "Hand",
-        stock: "14",
-        suppliers: "ACI",
-        price: "28.57",
-      },
-      {
-        productInfo: "Magnesium",
-        category: "Leg",
-        stock: "10",
-        suppliers: "Uniliver",
-        price: "56.34",
-      },
-    ],
-    suppliers: [
-      {
-        user: "Alex Shatov",
-        address: "Mripur-1",
-        company: "Square",
-        deliveryDate: "August 1, 2023",
-        ammount: "6952.53",
-        status: "Active",
-      },
-      {
-        user: "Philip Harbach",
-        address: "Dhonmondi",
-        company: "Acme",
-        deliveryDate: "August 1, 2023",
-        ammount: "8527.58",
-        status: "Active",
-      },
-      {
-        user: "Mirko Fisuk",
-        address: "Uttara-6",
-        company: "Beximco",
-        deliveryDate: "August 1, 2023",
-        ammount: "2698.50",
-        status: "Active",
-      },
-      {
-        user: "Olga Semklo",
-        address: "Gulshan-1",
-        company: "ACI",
-        deliveryDate: "August 1, 2023",
-        ammount: "9852.64",
-        status: "Active",
-      },
-      {
-        user: "Burak Long",
-        address: "Mirpur-12",
-        company: "Uniliver",
-        deliveryDate: "August 1, 2023",
-        ammount: "1736.90",
-        status: "Deactive",
-      },
-    ],
-    customers: [
-      {
-        user: "Alex Shatov",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: "+8801736985253",
-        date: "Aug 1, 2023",
-      },
-      {
-        user: "Philip Harbach",
-        email: "philip.h@gmail.com",
-        address: "Dhonmondi",
-        phone: "+8801636985275",
-        date: "Aug 1, 2023",
-      },
-      {
-        user: "Mirko Fisuk",
-        email: "mirkofisuk@gmail.com",
-        address: "Uttara-6",
-        phone: "+8801336985214",
-        date: "Aug 1, 2023",
-      },
-      {
-        user: "Olga Semklo",
-        email: "olga.s@cool.design",
-        address: "Gulshan-1",
-        phone: "+8801736985264",
-        date: "Aug 1, 2023",
-      },
-      {
-        user: "Burak Long",
-        email: "longburak@gmail.com",
-        address: "Mirpur-12",
-        phone: "+8801736984514",
-        date: "Aug 1, 2023",
-      },
-    ],
+    orders: [],
+    products: [],
+    suppliers: [],
+    customers: [],
+    customerInfo: {},
     selectedItem: {},
+    paginPage: 1,
     isLoading: false,
     isError: null,
   },
@@ -175,11 +34,63 @@ export const dataSlice = createSlice({
     changeSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
+    changePaginPage: (state, { payload }) => {
+      state.paginPage = payload;
+    },
   },
   extraReducers: (builder) => {
-    builder;
+    builder
+      .addCase(getDashboardInfoThunk.fulfilled, (state, { payload }) => {
+        state.statistics.allProducts = payload.statistics.allProducts;
+        state.statistics.allSuppliers = payload.statistics.allSuppliers;
+        state.statistics.allCustomers = payload.statistics.allCustomers;
+        state.recentCustomers = payload.recentCustomers;
+        state.incomeExpenses = payload.incomeExpenses;
+      })
+      .addCase(getOrdersThunk.fulfilled, (state, { payload }) => {
+        state.orders = payload;
+      })
+      .addCase(getProductsThunk.fulfilled, (state, { payload }) => {
+        state.products = payload;
+      })
+      .addCase(addProductThunk.fulfilled, (state, { payload }) => {
+        state.products.push(payload);
+      })
+      .addCase(editProductThunk.fulfilled, (state, { payload }) => {
+        const productToUpdate = state.products.indexOf(
+          (product) => product._id === payload._id
+        );
+        if (productToUpdate) {
+          state.products[productToUpdate] = payload;
+        }
+      })
+      .addCase(deleteProductThunk.fulfilled, (state, { payload }) => {
+        state.products = state.products.filter(
+          (product) => product._id !== payload
+        );
+      })
+      .addCase(getSuppliersThunk.fulfilled, (state, { payload }) => {
+        state.suppliers = payload;
+      })
+      .addCase(addSupplierThunk.fulfilled, (state, { payload }) => {
+        state.suppliers.push(payload);
+      })
+      .addCase(editSupplierThunk.fulfilled, (state, { payload }) => {
+        const supplierToUpdate = state.products.indexOf(
+          (supplier) => supplier._id === payload._id
+        );
+        if (supplierToUpdate) {
+          state.suppliers[supplierToUpdate] = payload;
+        }
+      })
+      .addCase(getCustomersThunk.fulfilled, (state, { payload }) => {
+        state.customers = payload;
+      })
+      .addCase(getCustomerInfoThunk.fulfilled, (state, { payload }) => {
+        state.customerInfo = payload;
+      });
   },
 });
 
-export const { changeSelectedItem } = dataSlice.actions;
+export const { changeSelectedItem, changePaginPage } = dataSlice.actions;
 export const dataReducer = dataSlice.reducer;

@@ -66,7 +66,7 @@ const AddEditProduct = () => {
   const { _id, productInfo, category, stock, suppliers, price } = selectedItem;
 
   const validationSchema = Yup.object().shape({
-    prodInfo: Yup.string().required("Product Info is required"),
+    name: Yup.string().required("Product Info is required"),
     category: Yup.string().required("Category is required"),
     stock: Yup.string().required("Stock is required"),
     suppliers: Yup.string().required("Suppliers is required"),
@@ -92,7 +92,15 @@ const AddEditProduct = () => {
     dispatch(closeModals());
   };
 
-  const categories = ["Medicine", "Heart", "Head", "Hand", "Leg"];
+  const categories = [
+    "Medicine",
+    "Heart",
+    "Head",
+    "Hand",
+    "Leg",
+    "Skin Care",
+    "Dental Care",
+  ];
 
   return (
     <ModalWrpr>
@@ -105,9 +113,9 @@ const AddEditProduct = () => {
             type="text"
             placeholder="Product Info"
             defaultValue={addProductModal ? productInfo : ""}
-            {...register("prodInfo")}
+            {...register("name")}
           />
-          {errors.prodInfo && <p>{errors.prodInfo.message}</p>}
+          {errors.name && <p>{errors.name.message}</p>}
 
           <StyledFormControl variant="outlined">
             <Select

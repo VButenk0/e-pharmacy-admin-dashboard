@@ -120,3 +120,15 @@ export const getCustomersThunk = createAsyncThunk(
     }
   }
 );
+
+export const getCustomerInfoThunk = createAsyncThunk(
+  "data/customerInfo",
+  async (id, thunkApi) => {
+    try {
+      const { data } = await api.get(`/customers/:${id}`);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);

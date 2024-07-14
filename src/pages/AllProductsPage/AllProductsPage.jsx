@@ -9,8 +9,11 @@ import {
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
 import { selectProducts } from "../../redux/selectors";
+import { changeSelectedItem } from "../../redux/data/dataSlice";
+import { getProductsThunk } from "../../redux/data/operations";
 import {
   AllOrdersWrpr,
+  ImageNameWrpr,
   PaginWrpr,
   TableTitle,
   TableWrpr,
@@ -22,7 +25,6 @@ import {
   FilterAndAddWrpr,
   FilterWrpr,
 } from "./AllProductsPage.styled";
-import { changeSelectedItem } from "../../redux/data/dataSlice";
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +39,10 @@ const AllProductsPage = () => {
   };
 
   useEffect(() => {
+    dispatch(getProductsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (filter === "") setFilteredProducts(products);
   }, [filter, products]);
 
@@ -48,16 +54,16 @@ const AllProductsPage = () => {
     event.preventDefault();
     setFilteredProducts(
       products.filter((product) =>
-        product.productInfo.toLowerCase().includes(filter.toLowerCase())
+        product.name.toLowerCase().includes(filter.toLowerCase())
       )
     );
   };
 
-  const handleEditProduct = (product) => {
+  const handleEditProduct = (product) => () => {
     dispatch(
       changeSelectedItem({
         _id: product._id,
-        productInfo: product.productInfo,
+        name: product.name,
         category: product.category,
         stock: product.stock,
         suppliers: product.suppliers,
@@ -68,7 +74,17 @@ const AllProductsPage = () => {
     dispatch(changeEditProductModal(true));
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = (product) => () => {
+    dispatch(
+      changeSelectedItem({
+        _id: product._id,
+        name: product.name,
+        category: product.category,
+        stock: product.stock,
+        suppliers: product.suppliers,
+        price: product.price,
+      })
+    );
     dispatch(changeModalOpen(true));
     dispatch(changeDeleteProductModal(true));
   };
@@ -115,7 +131,17 @@ const AllProductsPage = () => {
               <tbody>
                 {filteredProducts.map((product, index) => (
                   <tr key={index}>
-                    <th>{product.productInfo}</th>
+                    <th>
+                      <ImageNameWrpr>
+                        <img
+                          src={product.photo}
+                          alt={product.name + "'s Photo"}
+                          width={36}
+                          height={36}
+                        />
+                        {product.name}
+                      </ImageNameWrpr>
+                    </th>
                     <th>{product.category}</th>
                     <th>{product.stock}</th>
                     <th>{product.suppliers}</th>
@@ -129,7 +155,7 @@ const AllProductsPage = () => {
                         </ActionBtn>
                         <ActionBtn
                           className="delete"
-                          onClick={handleDeleteProduct}
+                          onClick={handleDeleteProduct(product)}
                         >
                           <svg width="16" height="16">
                             <use href={sprite + "#delete"}></use>

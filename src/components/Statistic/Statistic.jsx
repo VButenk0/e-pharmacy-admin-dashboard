@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import sprite from "../../assets/sprite.svg";
 import {
   BlockTitleWrpr,
@@ -5,11 +6,13 @@ import {
   StatText,
   StatisticBlocksWrpr,
 } from "./Statistic.styled";
+import { selectStatistics } from "../../redux/selectors";
 
 const Statistic = () => {
-  const products = 8430;
-  const suppliers = 211;
-  const customers = 140;
+  const statistics = useSelector(selectStatistics);
+  const products = statistics.allProducts;
+  const suppliers = statistics.allSuppliers;
+  const customers = statistics.allCustomers;
 
   return (
     <StatisticBlocksWrpr>

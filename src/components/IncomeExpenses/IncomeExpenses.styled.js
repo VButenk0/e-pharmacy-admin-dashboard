@@ -21,11 +21,16 @@ export const TypeWrpr = styled.div`
   &.error {
     background-color: var(--border-color);
   }
+`;
 
+export const AmountText = styled.p`
   &.expense {
     color: var(--accent2);
   }
   &.income {
     color: var(--accent);
+  }
+  &.error {
+    text-decoration: line-through;
   }
 `;

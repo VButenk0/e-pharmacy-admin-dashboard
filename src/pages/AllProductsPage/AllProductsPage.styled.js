@@ -18,6 +18,10 @@ export const FilterWrpr = styled.div`
     height: 44px;
     border-radius: 60px;
     padding: 0 18px;
+
+    &::placeholder {
+      color: var(--trans-text);
+    }
   }
 
   button {
@@ -32,6 +36,7 @@ export const FilterWrpr = styled.div`
 
     color: var(--white-text);
     font-size: 14px;
+    font-weight: 500;
     line-height: 1.28571;
 
     transition: all 0.2s;
@@ -50,6 +55,7 @@ export const AddBtn = styled.button`
 
   font-family: "Inter Medium";
   font-size: 14px;
+  font-weight: 500;
   line-height: 1.28571;
 
   &:hover,
