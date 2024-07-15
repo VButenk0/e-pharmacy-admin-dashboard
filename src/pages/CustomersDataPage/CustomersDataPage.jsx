@@ -1,24 +1,41 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
-import { selectCustomers } from "../../redux/selectors";
+import { selectCustomers, selectPaginPage } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   FilterWrpr,
+  ImageNameWrpr,
   PaginWrpr,
   TableTitle,
   TableWrpr,
 } from "../AllOrdersPage/AllOrdersPage.styled";
+import { getCustomersThunk } from "../../redux/data/operations";
+import { Pagination } from "@mui/material";
+import { changePaginPage } from "../../redux/data/dataSlice";
 
 const CustomersDataPage = () => {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [filteredCustomers, setFilteredCustomers] = useState([]);
 
+  const page = useSelector(selectPaginPage);
   const customers = useSelector(selectCustomers);
 
+  console.log(page);
+
   useEffect(() => {
-    if (filter === "") setFilteredCustomers(customers);
+    dispatch(getCustomersThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const filtered = filter
+      ? customers.filter((customer) =>
+          customer.name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : customers;
+    setFilteredCustomers(filtered);
   }, [filter, customers]);
 
   const handleFilterChange = (event) => {
@@ -27,12 +44,21 @@ const CustomersDataPage = () => {
 
   const handleFilterSubmit = (event) => {
     event.preventDefault();
-    setFilteredCustomers(
-      customers.filter((customer) =>
-        customer.user.toLowerCase().includes(filter.toLowerCase())
-      )
+    const filtered = customers.filter((customer) =>
+      customer.name.toLowerCase().includes(filter.toLowerCase())
     );
+    setFilteredCustomers(filtered);
+    dispatch(changePaginPage(1));
   };
+
+  const handlePageChange = (event, value) => {
+    dispatch(changePaginPage(value));
+  };
+
+  const pageOfCustomers = Math.ceil(filteredCustomers.length / 5);
+  console.log(pageOfCustomers);
+
+  const displayedCustomers = filteredCustomers.slice((page - 1) * 5, page * 5);
 
   return (
     <Container>
@@ -51,7 +77,7 @@ const CustomersDataPage = () => {
           </button>
         </FilterWrpr>
         <div>
-          <TableTitle>All orders</TableTitle>
+          <TableTitle>Customers Data</TableTitle>
           <TableWrpr>
             <table>
               <thead>
@@ -64,21 +90,39 @@ const CustomersDataPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredCustomers.map((customer, index) => (
+                {displayedCustomers.map((customer, index) => (
                   <tr key={index}>
-                    <th>{customer.user}</th>
+                    <th>
+                      <ImageNameWrpr>
+                        <img
+                          src={customer.image}
+                          alt={customer.name + "'s Photo"}
+                          width={36}
+                          height={36}
+                        />
+                        {customer.name}
+                      </ImageNameWrpr>
+                    </th>
                     <th>{customer.email}</th>
                     <th>{customer.address}</th>
                     <th>{customer.phone}</th>
-                    <th>{customer.date}</th>
+                    <th>{customer.register_date}</th>
                   </tr>
                 ))}
               </tbody>
             </table>
           </TableWrpr>
         </div>
+        {/* color="var(--accent)" boundaryCount={0}*/}
         <PaginWrpr>
-          <div>
+          <Pagination
+            page={page}
+            count={pageOfCustomers}
+            hidePrevButton
+            hideNextButton
+            onChange={handlePageChange}
+          />
+          {/* <div>
             <span className="active"></span>
           </div>
           <div>
@@ -92,7 +136,7 @@ const CustomersDataPage = () => {
           </div>
           <div>
             <span></span>
-          </div>
+          </div> */}
         </PaginWrpr>
       </AllOrdersWrpr>
     </Container>

@@ -8,6 +8,7 @@ import {
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
 import { selectSuppliers } from "../../redux/selectors";
+import { getSuppliersThunk } from "../../redux/data/operations";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -26,6 +27,10 @@ const AllSuppliersPage = () => {
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
 
   const suppliers = useSelector(selectSuppliers);
+
+  useEffect(() => {
+    dispatch(getSuppliersThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     if (filter === "") setFilteredSuppliers(suppliers);
@@ -91,11 +96,11 @@ const AllSuppliersPage = () => {
               <tbody>
                 {filteredSuppliers.map((supplier, index) => (
                   <tr key={index}>
-                    <th>{supplier.user}</th>
+                    <th>{supplier.name}</th>
                     <th>{supplier.address}</th>
-                    <th>{supplier.company}</th>
-                    <th>{supplier.deliveryDate}</th>
-                    <th>{supplier.ammount}</th>
+                    <th>{supplier.suppliers}</th>
+                    <th>{supplier.date}</th>
+                    <th>{supplier.amount}</th>
                     <th>
                       <StatusWrpr className={supplier.status.toLowerCase()}>
                         {supplier.status}
