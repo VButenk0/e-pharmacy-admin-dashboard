@@ -7,7 +7,7 @@ import {
   changeEditSupplierModal,
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
-import { selectSuppliers } from "../../redux/selectors";
+import { selectPaginPage, selectSuppliers } from "../../redux/selectors";
 import { getSuppliersThunk } from "../../redux/data/operations";
 import {
   AllOrdersWrpr,
@@ -20,34 +20,50 @@ import {
   FilterWrpr,
 } from "../AllProductsPage/AllProductsPage.styled";
 import { AddSupBtn, StatusWrpr, SupEditBtn } from "./AllSuppliersPage.styled";
+import {
+  displayedFunc,
+  filteredFunc,
+  handleFilterChange,
+  pageOfCustomersFunc,
+} from "../../helpers/helperFunctions";
+import { changePaginPage } from "../../redux/data/dataSlice";
+import { Pagination, PaginationItem } from "@mui/material";
 
 const AllSuppliersPage = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
 
+  const page = useSelector(selectPaginPage);
   const suppliers = useSelector(selectSuppliers);
 
   useEffect(() => {
     dispatch(getSuppliersThunk());
+    setFilter("");
   }, [dispatch]);
 
   useEffect(() => {
-    if (filter === "") setFilteredSuppliers(suppliers);
-  }, [filter, suppliers]);
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
+    setFilteredSuppliers(suppliers);
+  }, [suppliers]);
 
   const handleFilterSubmit = (event) => {
     event.preventDefault();
-    setFilteredSuppliers(
-      suppliers.filter((supplier) =>
-        supplier.user.toLowerCase().includes(filter.toLowerCase())
-      )
-    );
+    const filtered = filteredFunc(suppliers, filter);
+    setFilteredSuppliers(filtered);
+    dispatch(changePaginPage(1));
   };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleFilterSubmit(event);
+    }
+  };
+
+  const handlePageChange = (event, value) => {
+    dispatch(changePaginPage(value));
+  };
+
+  const displayedSuppliers = displayedFunc(filteredSuppliers, page);
 
   const handleAddSupplier = () => {
     dispatch(changeModalOpen(true));
@@ -67,7 +83,8 @@ const AllSuppliersPage = () => {
             <input
               type="text"
               placeholder="User Name"
-              onChange={handleFilterChange}
+              onChange={() => handleFilterChange(event, setFilter)}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={handleFilterSubmit}>
               <svg width="14" height="14">
@@ -94,7 +111,7 @@ const AllSuppliersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredSuppliers.map((supplier, index) => (
+                {displayedSuppliers.map((supplier, index) => (
                   <tr key={index}>
                     <th>{supplier.name}</th>
                     <th>{supplier.address}</th>
@@ -121,21 +138,45 @@ const AllSuppliersPage = () => {
           </TableWrpr>
         </div>
         <PaginWrpr>
-          <div>
-            <span className="active"></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
+          <Pagination
+            page={page}
+            count={pageOfCustomersFunc(filteredSuppliers)}
+            hidePrevButton
+            hideNextButton
+            onChange={handlePageChange}
+            renderItem={(item) => (
+              <PaginationItem
+                {...item}
+                sx={{
+                  backgroundColor: "#E7F1ED",
+                  border: "1px solid transparent",
+                  "&:hover": {
+                    border: "1px solid var(--accent)",
+                    backgroundColor: "#E7F1ED",
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: "var(--accent)",
+                    "&:hover": {
+                      backgroundColor: "var(--accent)",
+                    },
+                  },
+                  "& .MuiPaginationItem-page": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    "&::before": {
+                      content: '""',
+                      width: "10px",
+                      height: "10px",
+                      backgroundColor: "var(--accent)",
+                      borderRadius: "50%",
+                    },
+                    color: "transparent",
+                  },
+                }}
+              />
+            )}
+          />
         </PaginWrpr>
       </AllOrdersWrpr>
     </Container>

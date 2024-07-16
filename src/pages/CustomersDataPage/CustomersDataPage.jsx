@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Pagination, PaginationItem } from "@mui/material";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import { changePaginPage } from "../../redux/data/dataSlice";
+import { getCustomersThunk } from "../../redux/data/operations";
+import {
+  displayedFunc,
+  filteredFunc,
+  handleFilterChange,
+  pageOfCustomersFunc,
+} from "../../helpers/helperFunctions";
 import { selectCustomers, selectPaginPage } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
@@ -11,9 +20,6 @@ import {
   TableTitle,
   TableWrpr,
 } from "../AllOrdersPage/AllOrdersPage.styled";
-import { getCustomersThunk } from "../../redux/data/operations";
-import { Pagination } from "@mui/material";
-import { changePaginPage } from "../../redux/data/dataSlice";
 
 const CustomersDataPage = () => {
   const dispatch = useDispatch();
@@ -23,42 +29,33 @@ const CustomersDataPage = () => {
   const page = useSelector(selectPaginPage);
   const customers = useSelector(selectCustomers);
 
-  console.log(page);
-
   useEffect(() => {
     dispatch(getCustomersThunk());
+    setFilter("");
   }, [dispatch]);
 
   useEffect(() => {
-    const filtered = filter
-      ? customers.filter((customer) =>
-          customer.name.toLowerCase().includes(filter.toLowerCase())
-        )
-      : customers;
-    setFilteredCustomers(filtered);
-  }, [filter, customers]);
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
+    setFilteredCustomers(customers);
+  }, [customers]);
 
   const handleFilterSubmit = (event) => {
     event.preventDefault();
-    const filtered = customers.filter((customer) =>
-      customer.name.toLowerCase().includes(filter.toLowerCase())
-    );
+    const filtered = filteredFunc(customers, filter);
     setFilteredCustomers(filtered);
     dispatch(changePaginPage(1));
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleFilterSubmit(event);
+    }
   };
 
   const handlePageChange = (event, value) => {
     dispatch(changePaginPage(value));
   };
 
-  const pageOfCustomers = Math.ceil(filteredCustomers.length / 5);
-  console.log(pageOfCustomers);
-
-  const displayedCustomers = filteredCustomers.slice((page - 1) * 5, page * 5);
+  const displayedCustomers = displayedFunc(filteredCustomers, page);
 
   return (
     <Container>
@@ -67,7 +64,9 @@ const CustomersDataPage = () => {
           <input
             type="text"
             placeholder="User Name"
-            onChange={handleFilterChange}
+            value={filter}
+            onChange={() => handleFilterChange(event, setFilter)}
+            onKeyPress={handleKeyPress}
           />
           <button onClick={handleFilterSubmit}>
             <svg width="14" height="14">
@@ -113,30 +112,46 @@ const CustomersDataPage = () => {
             </table>
           </TableWrpr>
         </div>
-        {/* color="var(--accent)" boundaryCount={0}*/}
         <PaginWrpr>
           <Pagination
             page={page}
-            count={pageOfCustomers}
+            count={pageOfCustomersFunc(filteredCustomers)}
             hidePrevButton
             hideNextButton
             onChange={handlePageChange}
+            renderItem={(item) => (
+              <PaginationItem
+                {...item}
+                sx={{
+                  backgroundColor: "#E7F1ED",
+                  border: "1px solid transparent",
+                  "&:hover": {
+                    border: "1px solid var(--accent)",
+                    backgroundColor: "#E7F1ED",
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: "var(--accent)",
+                    "&:hover": {
+                      backgroundColor: "var(--accent)",
+                    },
+                  },
+                  "& .MuiPaginationItem-page": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    "&::before": {
+                      content: '""',
+                      width: "10px",
+                      height: "10px",
+                      backgroundColor: "var(--accent)",
+                      borderRadius: "50%",
+                    },
+                    color: "transparent",
+                  },
+                }}
+              />
+            )}
           />
-          {/* <div>
-            <span className="active"></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div>
-          <div>
-            <span></span>
-          </div> */}
         </PaginWrpr>
       </AllOrdersWrpr>
     </Container>
