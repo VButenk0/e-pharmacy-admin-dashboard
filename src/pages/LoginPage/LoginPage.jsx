@@ -16,8 +16,11 @@ import {
   PillImg,
   Title,
 } from "./LoginPage.styled";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/auth/operations";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -39,6 +42,7 @@ const LoginPage = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(loginThunk(data));
   };
 
   return (
