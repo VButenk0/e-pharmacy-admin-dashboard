@@ -31,13 +31,20 @@ export const logoutThunk = createAsyncThunk(
 
 export const userInfoThunk = createAsyncThunk(
   "auth/userInfo",
-  async (credentials, ThunkAPI) => {
+  async (_, thunkApi) => {
+    const savedToken = thunkApi.getState().authSlice.token;
+    if (savedToken) {
+      setToken(savedToken);
+    } else {
+      return thunkApi.rejectWithValue("Token doesn't exist");
+    }
+
     try {
-      const { data } = await api.get(`/user/user-info`, credentials);
+      const { data } = await api.get(`/user/user-info`);
       return data;
     } catch (error) {
       //   toast.error(error.message);
-      return ThunkAPI.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );

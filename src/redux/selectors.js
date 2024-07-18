@@ -1,5 +1,6 @@
 export const selectEmail = (state) => state.authSlice.email;
 export const selectIsLogged = (state) => state.authSlice.isLogged;
+export const selectToken = (state) => state.authSlice.token;
 
 export const selectStatistics = (state) => state.dataSlice.statistics;
 export const selectRecentCustomers = (state) => state.dataSlice.recentCustomers;

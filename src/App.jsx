@@ -7,8 +7,11 @@ import AllOrdersPage from "./pages/AllOrdersPage/AllOrdersPage";
 import AllProductsPage from "./pages/AllProductsPage/AllProductsPage";
 import AllSuppliersPage from "./pages/AllSuppliersPage/AllSuppliersPage";
 import CustomersDataPage from "./pages/CustomersDataPage/CustomersDataPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectIsLogged } from "./redux/selectors";
+import { useEffect } from "react";
+import { setToken } from "./configAxios/configAxios";
+import { userInfoThunk } from "./redux/auth/operations";
 
 const PrivateRoute = ({ children }) => {
   const isLogged = useSelector(selectIsLogged);
@@ -16,6 +19,12 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userInfoThunk());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>

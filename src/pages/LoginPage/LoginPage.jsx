@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -5,6 +6,7 @@ import * as Yup from "yup";
 import sprite from "../../assets/sprite.svg";
 import pill from "../../images/white round pill.png";
 import lines from "../../images/three lines.png";
+import { loginThunk } from "../../redux/auth/operations";
 import {
   ContentWrpr,
   InputWrpr,
@@ -16,11 +18,11 @@ import {
   PillImg,
   Title,
 } from "./LoginPage.styled";
-import { useDispatch } from "react-redux";
-import { loginThunk } from "../../redux/auth/operations";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -41,8 +43,12 @@ const LoginPage = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    dispatch(loginThunk(data));
+    dispatch(loginThunk(data))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch(() => {});
   };
 
   return (

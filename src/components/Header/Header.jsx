@@ -1,5 +1,8 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
+import { logoutThunk } from "../../redux/auth/operations";
+import { selectEmail, selectIsLogged } from "../../redux/selectors";
 import {
   HeaderWrpr,
   LogoTitleWrpr,
@@ -8,8 +11,6 @@ import {
   Title,
   TitleWrpr,
 } from "./Header.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { selectEmail, selectIsLogged } from "../../redux/selectors";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Header = () => {
   const currentPageTitle = getPageTitle(page);
 
   const handleLogoutClick = () => {
-    dispatch();
+    dispatch(logoutThunk());
     navigate("/login");
   };
 

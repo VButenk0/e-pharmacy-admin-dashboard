@@ -5,9 +5,9 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     name: "",
-    email: "vendor@gmail.com", // ""
+    email: "",
     token: "",
-    isLogged: true, // false
+    isLogged: false,
     isLoading: false,
     isError: null,
   },
@@ -19,20 +19,27 @@ export const authSlice = createSlice({
         state.name = payload.user.name;
         state.email = payload.user.email;
         state.token = payload.token;
+        localStorage.setItem("token", payload.token);
         state.isLogged = true;
         state.isLoading = false;
+        state.isError = null;
       })
       .addCase(logoutThunk.fulfilled, (state) => {
         state.name = "";
         state.email = "";
         state.token = "";
+        localStorage.removeItem("token");
         state.isLogged = false;
         state.isLoading = false;
+        state.isError = null;
       })
       .addCase(userInfoThunk.fulfilled, (state, { payload }) => {
+        console.log(payload);
         state.name = payload.name;
         state.email = payload.email;
+        state.isLogged = true;
         state.isLoading = false;
+        state.isError = null;
       })
       .addCase(loginThunk.pending, (state) => {
         state.isLoading = true;
