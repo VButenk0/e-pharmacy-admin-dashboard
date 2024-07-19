@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -7,15 +9,17 @@ import AllOrdersPage from "./pages/AllOrdersPage/AllOrdersPage";
 import AllProductsPage from "./pages/AllProductsPage/AllProductsPage";
 import AllSuppliersPage from "./pages/AllSuppliersPage/AllSuppliersPage";
 import CustomersDataPage from "./pages/CustomersDataPage/CustomersDataPage";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsLogged } from "./redux/selectors";
-import { useEffect } from "react";
-import { setToken } from "./configAxios/configAxios";
 import { userInfoThunk } from "./redux/auth/operations";
+import { selectIsLogged } from "./redux/selectors";
 
 const PrivateRoute = ({ children }) => {
   const isLogged = useSelector(selectIsLogged);
   return isLogged ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const isLogged = useSelector(selectIsLogged);
+  return isLogged ? <Navigate to="/dashboard" /> : children;
 };
 
 const App = () => {
@@ -28,7 +32,14 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/"
           element={

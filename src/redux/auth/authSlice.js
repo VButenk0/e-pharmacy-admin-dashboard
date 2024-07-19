@@ -34,7 +34,6 @@ export const authSlice = createSlice({
         state.isError = null;
       })
       .addCase(userInfoThunk.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.name = payload.name;
         state.email = payload.email;
         state.isLogged = true;

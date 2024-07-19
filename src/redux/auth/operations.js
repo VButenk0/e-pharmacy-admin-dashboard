@@ -9,7 +9,6 @@ export const loginThunk = createAsyncThunk(
       setToken(data.token);
       return data;
     } catch (error) {
-      //   toast.error(error.message);
       return thunkApi.rejectWithValue(error.message);
     }
   }
@@ -21,9 +20,8 @@ export const logoutThunk = createAsyncThunk(
     try {
       await api.get("/user/logout");
       clearToken();
-      //   toast.success("Logout successfully");
+      localStorage.removeItem("token");
     } catch (error) {
-      //   toast.error(error.message);
       return thunkApi.rejectWithValue(error.message);
     }
   }
@@ -32,7 +30,8 @@ export const logoutThunk = createAsyncThunk(
 export const userInfoThunk = createAsyncThunk(
   "auth/userInfo",
   async (_, thunkApi) => {
-    const savedToken = thunkApi.getState().authSlice.token;
+    const state = thunkApi.getState();
+    const savedToken = state.authSlice.token || localStorage.getItem("token");
     if (savedToken) {
       setToken(savedToken);
     } else {
@@ -43,7 +42,6 @@ export const userInfoThunk = createAsyncThunk(
       const { data } = await api.get(`/user/user-info`);
       return data;
     } catch (error) {
-      //   toast.error(error.message);
       return thunkApi.rejectWithValue(error.message);
     }
   }

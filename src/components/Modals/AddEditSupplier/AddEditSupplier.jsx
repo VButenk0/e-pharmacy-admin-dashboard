@@ -112,9 +112,9 @@ const AddEditSupplier = () => {
 
     dispatch(closeModals());
     if (addSupplierModal) {
-      console.log(`Added a product with this parameters:`, data);
+      console.log(`Added a supplier with this parameters:`, data);
     } else {
-      console.log(`Edited a product with this parameters:`, data);
+      console.log(`Edited a supplier with this parameters:`, data);
     }
   };
 
