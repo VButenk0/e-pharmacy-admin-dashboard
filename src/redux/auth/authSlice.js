@@ -16,8 +16,8 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
-        state.name = payload.user.name;
-        state.email = payload.user.email;
+        state.name = payload.name;
+        state.email = payload.email;
         state.token = payload.token;
         localStorage.setItem("token", payload.token);
         state.isLogged = true;
@@ -42,12 +42,15 @@ export const authSlice = createSlice({
       })
       .addCase(loginThunk.pending, (state) => {
         state.isLoading = true;
+        state.isError = null;
       })
       .addCase(logoutThunk.pending, (state) => {
         state.isLoading = true;
+        state.isError = null;
       })
       .addCase(userInfoThunk.pending, (state) => {
         state.isLoading = true;
+        state.isError = null;
       })
       .addCase(loginThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
