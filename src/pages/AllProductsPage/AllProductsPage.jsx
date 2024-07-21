@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Pagination, PaginationItem } from "@mui/material";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import pill from "../../images/pill.png";
+import {
+  displayedFunc,
+  filteredFunc,
+  handleFilterChange,
+  pageOfCustomersFunc,
+} from "../../helpers/helperFunctions";
 import {
   changeAddProductModal,
   changeDeleteProductModal,
   changeEditProductModal,
   changeModalOpen,
 } from "../../redux/modals/modalsSlice";
-import { selectPaginPage, selectProducts } from "../../redux/selectors";
 import {
   changePaginPage,
   changeSelectedItem,
 } from "../../redux/data/dataSlice";
 import { getProductsThunk } from "../../redux/data/operations";
+import { selectPaginPage, selectProducts } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   ImageNameWrpr,
@@ -28,13 +36,6 @@ import {
   FilterAndAddWrpr,
   FilterWrpr,
 } from "./AllProductsPage.styled";
-import { Pagination, PaginationItem } from "@mui/material";
-import {
-  displayedFunc,
-  filteredFunc,
-  handleFilterChange,
-  pageOfCustomersFunc,
-} from "../../helpers/helperFunctions";
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
@@ -43,11 +44,6 @@ const AllProductsPage = () => {
 
   const page = useSelector(selectPaginPage);
   const products = useSelector(selectProducts);
-
-  const handleAddProduct = () => {
-    dispatch(changeModalOpen(true));
-    dispatch(changeAddProductModal(true));
-  };
 
   useEffect(() => {
     dispatch(getProductsThunk());
@@ -77,17 +73,13 @@ const AllProductsPage = () => {
 
   const displayedSuppliers = displayedFunc(filteredProducts, page);
 
+  const handleAddProduct = () => {
+    dispatch(changeModalOpen(true));
+    dispatch(changeAddProductModal(true));
+  };
+
   const handleEditProduct = (product) => () => {
-    dispatch(
-      changeSelectedItem({
-        _id: product._id,
-        name: product.name,
-        category: product.category,
-        stock: product.stock,
-        suppliers: product.suppliers,
-        price: product.price,
-      })
-    );
+    dispatch(changeSelectedItem(product));
     dispatch(changeModalOpen(true));
     dispatch(changeEditProductModal(true));
   };
@@ -96,11 +88,6 @@ const AllProductsPage = () => {
     dispatch(
       changeSelectedItem({
         _id: product._id,
-        name: product.name,
-        category: product.category,
-        stock: product.stock,
-        suppliers: product.suppliers,
-        price: product.price,
       })
     );
     dispatch(changeModalOpen(true));
@@ -152,12 +139,21 @@ const AllProductsPage = () => {
                   <tr key={index}>
                     <th>
                       <ImageNameWrpr>
-                        <img
-                          src={product.photo}
-                          alt={product.name + "'s Photo"}
-                          width={36}
-                          height={36}
-                        />
+                        {product.photo ? (
+                          <img
+                            src={product.photo}
+                            alt={product.name + " Picture"}
+                            width={36}
+                            height={36}
+                          />
+                        ) : (
+                          <img
+                            src={pill}
+                            alt="Default Pill Picture"
+                            width={36}
+                            height={36}
+                          />
+                        )}
                         {product.name}
                       </ImageNameWrpr>
                     </th>

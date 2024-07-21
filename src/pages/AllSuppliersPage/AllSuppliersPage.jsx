@@ -26,7 +26,10 @@ import {
   handleFilterChange,
   pageOfCustomersFunc,
 } from "../../helpers/helperFunctions";
-import { changePaginPage } from "../../redux/data/dataSlice";
+import {
+  changePaginPage,
+  changeSelectedItem,
+} from "../../redux/data/dataSlice";
 import { Pagination, PaginationItem } from "@mui/material";
 
 const AllSuppliersPage = () => {
@@ -70,7 +73,12 @@ const AllSuppliersPage = () => {
     dispatch(changeAddSupplierModal(true));
   };
 
-  const handleEditSupplier = () => {
+  const handleEditSupplier = (supplier) => {
+    dispatch(
+      changeSelectedItem({
+        _id: supplier._id,
+      })
+    );
     dispatch(changeModalOpen(true));
     dispatch(changeEditSupplierModal(true));
   };
@@ -124,7 +132,7 @@ const AllSuppliersPage = () => {
                       </StatusWrpr>
                     </th>
                     <th>
-                      <SupEditBtn onClick={handleEditSupplier}>
+                      <SupEditBtn onClick={() => handleEditSupplier(supplier)}>
                         <svg width="16" height="16">
                           <use href={sprite + "#edit"}></use>
                         </svg>

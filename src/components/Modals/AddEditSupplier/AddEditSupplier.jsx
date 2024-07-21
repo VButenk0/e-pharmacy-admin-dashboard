@@ -8,7 +8,10 @@ import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { selectAddSupplierModal } from "../../../redux/selectors";
+import {
+  selectAddSupplierModal,
+  selectSelectedItem,
+} from "../../../redux/selectors";
 import { closeModals } from "../../../redux/modals/modalsSlice";
 import {
   ButtonsWrpr,
@@ -17,6 +20,11 @@ import {
   ModalWrpr,
   StyledInput,
 } from "../AddEditProduct/AddEditProduct.styled";
+import {
+  addSupplierThunk,
+  editSupplierThunk,
+  getSuppliersThunk,
+} from "../../../redux/data/operations";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -83,14 +91,25 @@ const StyledDatePicker = styled(DatePicker)({
 const AddEditSupplier = () => {
   const dispatch = useDispatch();
   const addSupplierModal = useSelector(selectAddSupplierModal);
+  const selectedItem = useSelector(selectSelectedItem);
+  const { _id, name, address, suppliers, date, amount, status } = selectedItem;
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Suppliers Info is required"),
+  const validationSchemaAdd = Yup.object().shape({
+    name: Yup.string().required("Supplier Info is required"),
     address: Yup.string().required("Address is required"),
-    suppliers: Yup.string().required("Company is required"),
-    date: Yup.string().required("Delivery date is required"),
-    ammount: Yup.string().required("Ammount is required"),
+    suppliers: Yup.string().required("Suppliers is required"),
+    date: Yup.string().required("Date is required"),
+    amount: Yup.string().required("Amount is required"),
     status: Yup.string().required("Status is required"),
+  });
+
+  const validationSchemaEdit = Yup.object().shape({
+    name: Yup.string().nullable(),
+    address: Yup.string().nullable(),
+    suppliers: Yup.string().nullable(),
+    date: Yup.string().nullable(),
+    amount: Yup.string().nullable(),
+    status: Yup.string().nullable(),
   });
 
   const {
@@ -99,7 +118,9 @@ const AddEditSupplier = () => {
     formState: { errors },
     setValue,
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(
+      addSupplierModal ? validationSchemaAdd : validationSchemaEdit
+    ),
   });
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -108,14 +129,21 @@ const AddEditSupplier = () => {
     const formattedDate = selectedDate
       ? dayjs(selectedDate).format("MMMM D, YYYY")
       : null;
-    data.delivDate = formattedDate;
+    data.date = formattedDate;
+    data.amount = `৳ ${data.amount}`;
 
-    dispatch(closeModals());
     if (addSupplierModal) {
-      console.log(`Added a supplier with this parameters:`, data);
+      dispatch(addSupplierThunk(data)).then(() =>
+        dispatch(getSuppliersThunk())
+      );
+      console.log("Added a supplier with this parameters:", data);
     } else {
-      console.log(`Edited a supplier with this parameters:`, data);
+      dispatch(editSupplierThunk(_id, data)).then(() =>
+        dispatch(getSuppliersThunk())
+      );
+      console.log("Edited a supplier with this parameters:", data);
     }
+    dispatch(closeModals());
   };
 
   const statuses = ["Active", "Deactive"];
@@ -130,6 +158,7 @@ const AddEditSupplier = () => {
           <StyledInput
             type="text"
             placeholder="Suppliers Info"
+            defaultValue={addSupplierModal ? "" : name}
             {...register("name")}
           />
           {errors.name && <p>{errors.name.message}</p>}
@@ -137,6 +166,7 @@ const AddEditSupplier = () => {
           <StyledInput
             type="text"
             placeholder="Address"
+            defaultValue={addSupplierModal ? "" : address}
             {...register("address")}
           />
           {errors.address && <p>{errors.address.message}</p>}
@@ -144,6 +174,7 @@ const AddEditSupplier = () => {
           <StyledInput
             type="text"
             placeholder="Company"
+            defaultValue={addSupplierModal ? "" : suppliers}
             {...register("suppliers")}
           />
           {errors.suppliers && <p>{errors.suppliers.message}</p>}
@@ -151,6 +182,7 @@ const AddEditSupplier = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StyledDatePicker
               value={selectedDate}
+              defaultValue={addSupplierModal ? "" : date}
               onChange={(date) => {
                 setSelectedDate(date);
                 setValue("date", date, { shouldValidate: true });
@@ -160,7 +192,7 @@ const AddEditSupplier = () => {
                   {...params}
                   inputProps={{
                     ...params.inputProps,
-                    placeholder: "Delivery date", // Custom placeholder
+                    placeholder: "Delivery date",
                   }}
                 />
               )}
@@ -170,15 +202,16 @@ const AddEditSupplier = () => {
 
           <StyledInput
             type="text"
-            placeholder="Ammount"
-            {...register("ammount")}
+            placeholder="Amount"
+            defaultValue={addSupplierModal ? "" : amount}
+            {...register("amount")}
           />
-          {errors.ammount && <p>{errors.ammount.message}</p>}
+          {errors.amount && <p>{errors.amount.message}</p>}
 
           <StyledFormControl variant="outlined">
             <Select
-              defaultValue=""
               displayEmpty
+              defaultValue={addSupplierModal ? "" : status}
               {...register("status")}
               input={<OutlinedInput notched={false} />}
               sx={{

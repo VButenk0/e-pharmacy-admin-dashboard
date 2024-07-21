@@ -19,6 +19,7 @@ import {
 import {
   addProductThunk,
   editProductThunk,
+  getProductsThunk,
 } from "../../../redux/data/operations";
 
 const StyledFormControl = styled(FormControl)({
@@ -63,9 +64,9 @@ const AddEditProduct = () => {
   const addProductModal = useSelector(selectAddProductModal);
   const selectedItem = useSelector(selectSelectedItem);
 
-  const { _id, productInfo, category, stock, suppliers, price } = selectedItem;
+  const { _id, name, category, stock, suppliers, price } = selectedItem;
 
-  const validationSchema = Yup.object().shape({
+  const validationSchemaAdd = Yup.object().shape({
     name: Yup.string().required("Product Info is required"),
     category: Yup.string().required("Category is required"),
     stock: Yup.string().required("Stock is required"),
@@ -73,20 +74,32 @@ const AddEditProduct = () => {
     price: Yup.string().required("Price is required"),
   });
 
+  const validationSchemaEdit = Yup.object().shape({
+    name: Yup.string(),
+    category: Yup.string(),
+    stock: Yup.string(),
+    suppliers: Yup.string(),
+    price: Yup.string(),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(
+      addProductModal ? validationSchemaAdd : validationSchemaEdit
+    ),
   });
 
   const onSubmit = (data) => {
     if (addProductModal) {
-      dispatch(addProductThunk());
+      dispatch(addProductThunk(data)).then(() => dispatch(getProductsThunk()));
       console.log("Added a product with this parameters:", data);
     } else {
-      dispatch(editProductThunk(_id));
+      dispatch(editProductThunk(_id, data)).then(() =>
+        dispatch(getProductsThunk())
+      );
       console.log("Edited a product with this parameters:", data);
     }
     dispatch(closeModals());
@@ -112,15 +125,14 @@ const AddEditProduct = () => {
           <StyledInput
             type="text"
             placeholder="Product Info"
-            defaultValue={addProductModal ? productInfo : ""}
+            defaultValue={addProductModal ? "" : name}
             {...register("name")}
           />
           {errors.name && <p>{errors.name.message}</p>}
-
           <StyledFormControl variant="outlined">
             <Select
-              defaultValue={addProductModal ? category : ""}
               displayEmpty
+              defaultValue={addProductModal ? "" : category}
               {...register("category")}
               input={<OutlinedInput notched={false} />}
               sx={{
@@ -168,23 +180,21 @@ const AddEditProduct = () => {
           <StyledInput
             type="text"
             placeholder="Stock"
-            defaultValue={addProductModal ? stock : ""}
+            defaultValue={addProductModal ? "" : stock}
             {...register("stock")}
           />
           {errors.stock && <p>{errors.stock.message}</p>}
-
           <StyledInput
             type="text"
             placeholder="Suppliers"
-            defaultValue={addProductModal ? suppliers : ""}
+            defaultValue={addProductModal ? "" : suppliers}
             {...register("suppliers")}
           />
           {errors.suppliers && <p>{errors.suppliers.message}</p>}
-
           <StyledInput
             type="text"
             placeholder="Price"
-            defaultValue={addProductModal ? price : ""}
+            defaultValue={addProductModal ? "" : price}
             {...register("price")}
           />
           {errors.price && <p>{errors.price.message}</p>}

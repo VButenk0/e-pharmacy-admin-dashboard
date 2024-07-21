@@ -51,9 +51,9 @@ export const addProductThunk = createAsyncThunk(
 
 export const editProductThunk = createAsyncThunk(
   "data/editProduct",
-  async (id, thunkApi) => {
+  async (_id, thunkApi) => {
     try {
-      const { data } = await api.put(`/products/:${id}`);
+      const { data } = await api.put(`/products/${_id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -65,7 +65,7 @@ export const deleteProductThunk = createAsyncThunk(
   "data/deleteProduct",
   async (id, thunkApi) => {
     try {
-      const { data } = await api.delete(`/products/:${id}`);
+      const { data } = await api.delete(`/products/${id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -101,7 +101,7 @@ export const editSupplierThunk = createAsyncThunk(
   "data/editSupplier",
   async (id, thunkApi) => {
     try {
-      const { data } = await api.put(`/suppliers/:${id}`);
+      const { data } = await api.put(`/suppliers/${id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -125,7 +125,7 @@ export const getCustomerInfoThunk = createAsyncThunk(
   "data/customerInfo",
   async (id, thunkApi) => {
     try {
-      const { data } = await api.get(`/customers/:${id}`);
+      const { data } = await api.get(`/customers/${id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
