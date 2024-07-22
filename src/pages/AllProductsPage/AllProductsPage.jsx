@@ -71,8 +71,6 @@ const AllProductsPage = () => {
     dispatch(changePaginPage(value));
   };
 
-  const displayedSuppliers = displayedFunc(filteredProducts, page);
-
   const handleAddProduct = () => {
     dispatch(changeModalOpen(true));
     dispatch(changeAddProductModal(true));
@@ -93,6 +91,8 @@ const AllProductsPage = () => {
     dispatch(changeModalOpen(true));
     dispatch(changeDeleteProductModal(true));
   };
+
+  const displayedProducts = displayedFunc(filteredProducts, page);
 
   return (
     <Container>
@@ -135,7 +135,7 @@ const AllProductsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {displayedSuppliers.map((product, index) => (
+                {displayedProducts.map((product, index) => (
                   <tr key={index}>
                     <th>
                       <ImageNameWrpr>

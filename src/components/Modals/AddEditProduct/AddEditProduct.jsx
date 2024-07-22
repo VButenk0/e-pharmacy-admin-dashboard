@@ -93,11 +93,13 @@ const AddEditProduct = () => {
   });
 
   const onSubmit = (data) => {
+    data.price = data.amount.toFixed(2);
+
     if (addProductModal) {
       dispatch(addProductThunk(data)).then(() => dispatch(getProductsThunk()));
       console.log("Added a product with this parameters:", data);
     } else {
-      dispatch(editProductThunk(_id, data)).then(() =>
+      dispatch(editProductThunk({ id: _id, data })).then(() =>
         dispatch(getProductsThunk())
       );
       console.log("Edited a product with this parameters:", data);

@@ -24,7 +24,7 @@ const RecentCustomersTable = () => {
                 <th>
                   <ImageNameWrpr>
                     <img
-                      src={customer.image}
+                      src={customer.image || customer.photo}
                       alt={customer.name + "'s Photo"}
                       width={36}
                       height={36}

@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Pagination, PaginationItem } from "@mui/material";
 import Container from "../../components/Container/Container";
 import sprite from "../../assets/sprite.svg";
+import defaultCustomer from "../../images/defaultCustomer.png";
 import { getOrdersThunk } from "../../redux/data/operations";
 import { changePaginPage } from "../../redux/data/dataSlice";
 import {
   displayedFunc,
+  fetchImages,
   filteredFunc,
   handleFilterChange,
   pageOfCustomersFunc,
@@ -26,6 +28,7 @@ const AllOrdersPage = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [images, setImages] = useState({});
 
   const page = useSelector(selectPaginPage);
   const orders = useSelector(selectOrders);
@@ -37,6 +40,7 @@ const AllOrdersPage = () => {
 
   useEffect(() => {
     setFilteredOrders(orders);
+    fetchImages(orders, setImages, defaultCustomer);
   }, [orders]);
 
   const handleFilterSubmit = (event) => {
@@ -96,7 +100,7 @@ const AllOrdersPage = () => {
                     <th>
                       <ImageNameWrpr>
                         <img
-                          src={order.photo}
+                          src={images[order._id] || defaultCustomer}
                           alt={order.name + "'s Photo"}
                           width={36}
                           height={36}

@@ -138,7 +138,7 @@ const AddEditSupplier = () => {
       );
       console.log("Added a supplier with this parameters:", data);
     } else {
-      dispatch(editSupplierThunk(_id, data)).then(() =>
+      dispatch(editSupplierThunk({ id: _id, data })).then(() =>
         dispatch(getSuppliersThunk())
       );
       console.log("Edited a supplier with this parameters:", data);
