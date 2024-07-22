@@ -17,10 +17,32 @@ export const HeaderWrpr = styled.div`
   border-bottom: 1px solid var(--border-color);
 `;
 
+export const LogoWrpr = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @media only screen and (max-width: 767px) {
+    gap: 20px;
+
+    & a img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+`;
+
 export const LogoTitleWrpr = styled.div`
   display: flex;
   align-items: center;
   gap: 60px;
+
+  @media only screen and (max-width: 1439px) {
+    gap: 32px;
+  }
+  @media only screen and (max-width: 767px) {
+    gap: 20px;
+  }
 `;
 
 export const TitleWrpr = styled.div`

@@ -10,12 +10,27 @@ export const LoginPageWrpr = styled.div`
   padding: 28px 100px;
 
   background: var(--bg-color);
+
+  @media only screen and (max-width: 1439px) {
+    gap: 214px;
+    padding: 24px 32px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    gap: 148px;
+    padding: 24px 20px;
+  }
 `;
 
 export const LogoWrpr = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
+
+  font-family: "Inter SemiBold";
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
 `;
 
 export const ContentWrpr = styled.div`
@@ -23,16 +38,37 @@ export const ContentWrpr = styled.div`
   gap: 150px;
 
   padding-bottom: 262px;
+
+  @media only screen and (max-width: 1439px) {
+    flex-direction: column;
+    gap: 50px;
+    padding-bottom: 276px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    gap: 40px;
+    padding-bottom: 234px;
+  }
 `;
 
 export const Title = styled.h1`
   width: 614px;
 
+  font-family: "Inter SemiBold";
   font-size: 54px;
-  line-height: 60px;
+  font-weight: 600;
+  line-height: 1.11111;
 
   span {
     color: var(--accent);
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 335px;
+
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.21429;
   }
 `;
 
@@ -86,6 +122,7 @@ export const LogInBtn = styled.button`
   color: var(--white-text);
   font-family: "Inter Medium";
   font-size: 14px;
+  font-weight: 500;
   line-height: 1.28571;
 
   transition: all 0.2s;
@@ -98,12 +135,25 @@ export const LogInBtn = styled.button`
 
 export const PillImg = styled.img`
   position: absolute;
-  top: 194px;
-  left: 516px;
+  top: 193px;
+  left: 510px;
 
   width: 179px;
   height: 175px;
   flex-shrink: 0;
+
+  @media only screen and (max-width: 1439px) {
+    top: 190px;
+    left: 440px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    top: 160px;
+    left: 240px;
+
+    width: 95px;
+    height: 93px;
+  }
 `;
 
 export const LinesImg = styled.img`
@@ -114,4 +164,9 @@ export const LinesImg = styled.img`
   width: 464.395px;
   height: 345.113px;
   flex-shrink: 0;
+
+  @media only screen and (max-width: 1439px) {
+    right: -206.39px;
+    bottom: -199.11px;
+  }
 `;
