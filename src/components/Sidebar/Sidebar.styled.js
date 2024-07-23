@@ -1,51 +1,46 @@
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const SidebarWrpr = styled.div`
-  display: flex;
-  justify-content: center;
+export const SidebarContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
 
+  width: 84px;
   height: 100%;
 
-  position: fixed;
-  top: 81px;
-  left: 0;
-  z-index: 10;
+  @media only screen and (max-width: 767px) {
+    width: 78px;
+  }
+`;
 
-  padding: 40px 18px;
-
+export const SidebarStyled = styled.div`
+  display: flex;
+  width: auto;
+  height: 100%;
+  z-index: 1000;
   background-color: var(--bg-color);
-  border-right: 1px solid var(--border-color);
 `;
 
-export const BtnsWrpr = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+export const BtnClose = styled.button`
+  flex-shrink: 0;
+  background-color: transparent;
+  position: absolute;
+  border: none;
+  padding: 0;
+  top: 20px;
+  right: 14px;
+  transition: scale 300ms ease-in-out;
+
+  &:hover,
+  &:focus {
+    scale: 1.4;
+  }
 `;
 
-export const StyledBtn = styled(NavLink)`
+export const SidebarLogoutWrpr = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  background-color: var(--white);
-
-  svg {
-    fill: var(--secondary-text);
-    transition: all 0.2s;
-  }
-
-  &.active svg {
-    fill: var(--accent);
-  }
-
-  &:hover {
-    svg {
-      fill: var(--accent);
-    }
-  }
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: space-between;
+  padding: 92px 20px 20px;
 `;

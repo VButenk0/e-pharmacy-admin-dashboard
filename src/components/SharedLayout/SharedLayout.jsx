@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import Header from "../Header/Header";
-import Sidebar from "../Sidebar/Sidebar";
 import { useSelector } from "react-redux";
-import { selectIsModalOpen } from "../../redux/selectors";
-import Modal from "../Modals/Modal/Modal";
+import { Outlet } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import Header from "../Header/Header";
+import SidebarMenu from "../Sidebar/SidebarMenu";
+import Modal from "../Modals/Modal/Modal";
+import { selectIsModalOpen } from "../../redux/selectors";
 
 const SharedLayout = () => {
   const modalIsOpen = useSelector(selectIsModalOpen);
@@ -14,7 +14,7 @@ const SharedLayout = () => {
   return (
     <>
       <Header />
-      {isDesktop && <Sidebar />}
+      {isDesktop && <SidebarMenu />}
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>

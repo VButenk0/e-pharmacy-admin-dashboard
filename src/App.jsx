@@ -9,8 +9,9 @@ import AllOrdersPage from "./pages/AllOrdersPage/AllOrdersPage";
 import AllProductsPage from "./pages/AllProductsPage/AllProductsPage";
 import AllSuppliersPage from "./pages/AllSuppliersPage/AllSuppliersPage";
 import CustomersDataPage from "./pages/CustomersDataPage/CustomersDataPage";
+import Sidebar from "./components/Sidebar/Sidebar";
 import { userInfoThunk } from "./redux/auth/operations";
-import { selectIsLogged } from "./redux/selectors";
+import { selectBurgerMenu, selectIsLogged } from "./redux/selectors";
 
 const PrivateRoute = ({ children }) => {
   const isLogged = useSelector(selectIsLogged);
@@ -24,6 +25,7 @@ const PublicRoute = ({ children }) => {
 
 const App = () => {
   const dispatch = useDispatch();
+  const burgerMenu = useSelector(selectBurgerMenu);
 
   useEffect(() => {
     dispatch(userInfoThunk());
@@ -56,6 +58,7 @@ const App = () => {
           <Route path="/customers" element={<CustomersDataPage />} />
         </Route>
       </Routes>
+      {burgerMenu && <Sidebar />}
     </>
   );
 };

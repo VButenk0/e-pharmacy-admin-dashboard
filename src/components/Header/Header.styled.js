@@ -83,3 +83,14 @@ export const LogoutBtn = styled.button`
     background-color: var(--accent-hover);
   }
 `;
+
+export const BurgerIcon = styled.svg`
+  stroke: var(--primary-text);
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  &:hover {
+    stroke: var(--accent);
+  }
+`;

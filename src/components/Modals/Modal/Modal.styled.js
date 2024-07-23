@@ -25,6 +25,10 @@ export const ModalStyled = styled.div`
   border-radius: 12px;
   background-color: var(--white);
   padding: 40px;
+
+  @media only screen and (max-width: 767px) {
+    width: 335px;
+  }
 `;
 
 export const BtnClose = styled.button`

@@ -8,6 +8,12 @@ export const TableTitle = styled.h2`
   font-weight: 600;
   line-height: 1.33333;
   padding: 20px;
+
+  @media only screen and (max-width: 767px) {
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 14px;
+  }
 `;
 
 export const TableContainer = styled.div`
@@ -18,8 +24,18 @@ export const TableContainer = styled.div`
   padding: 0 20px;
   border: 1px solid var(--border-color);
 
-  overflow-x: auto;
-  -webkit-overflow-scrolling: auto;
+  @media only screen and (max-width: 1439px) {
+    width: 704px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    overflow-x: scroll;
+
+    width: 335px;
+    height: 460px;
+
+    padding: 0 14px;
+  }
 `;
 
 export const Table = styled.table`
@@ -34,12 +50,18 @@ export const Table = styled.table`
     background-color: var(--white);
 
     color: var(--trans-text);
+    font-family: "Inter Medium";
     font-size: 14px;
     font-weight: 500;
     line-height: 1.28571;
 
     tr {
       border-bottom: 1px solid var(--border-color);
+    }
+
+    @media only screen and (max-width: 767px) {
+      font-size: 12px;
+      line-height: 1.16667;
     }
   }
 
@@ -62,10 +84,13 @@ export const Table = styled.table`
       border-right: none;
       padding-right: 0;
     }
-  }
 
-  tbody {
-    overflow-x: auto;
+    @media only screen and (max-width: 767px) {
+      padding: 14px 10px;
+
+      font-size: 12px;
+      line-height: 1.16667;
+    }
   }
 
   tbody tr {

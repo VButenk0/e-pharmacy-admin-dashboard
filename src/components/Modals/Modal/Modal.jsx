@@ -3,8 +3,11 @@ import ReactDom from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Fade } from "@mui/material";
 import sprite from "../../../assets/sprite.svg";
-import { closeModals } from "../../../redux/modals/modalsSlice";
+import AddEditProduct from "../AddEditProduct/AddEditProduct";
+import AddEditSupplier from "../AddEditSupplier/AddEditSupplier";
+import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import Logout from "../Logout/Logout";
+import { closeModals } from "../../../redux/modals/modalsSlice";
 import {
   selectAddProductModal,
   selectAddSupplierModal,
@@ -14,9 +17,6 @@ import {
   selectIsModalOpen,
   selectLogoutModal,
 } from "../../../redux/selectors";
-import DeleteProduct from "../DeleteProduct/DeleteProduct";
-import AddEditProduct from "../AddEditProduct/AddEditProduct";
-import AddEditSupplier from "../AddEditSupplier/AddEditSupplier";
 import { BtnClose, ModalContainer, ModalStyled, Overlay } from "./Modal.styled";
 
 const Modal = () => {

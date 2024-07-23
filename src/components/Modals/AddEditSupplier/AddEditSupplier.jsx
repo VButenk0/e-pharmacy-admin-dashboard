@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,12 +8,16 @@ import { styled } from "@mui/system";
 import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { closeModals } from "../../../redux/modals/modalsSlice";
+import {
+  addSupplierThunk,
+  editSupplierThunk,
+  getSuppliersThunk,
+} from "../../../redux/data/operations";
 import {
   selectAddSupplierModal,
   selectSelectedItem,
 } from "../../../redux/selectors";
-import { closeModals } from "../../../redux/modals/modalsSlice";
 import {
   ButtonsWrpr,
   InputsWrpr,
@@ -20,11 +25,6 @@ import {
   ModalWrpr,
   StyledInput,
 } from "../AddEditProduct/AddEditProduct.styled";
-import {
-  addSupplierThunk,
-  editSupplierThunk,
-  getSuppliersThunk,
-} from "../../../redux/data/operations";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -181,8 +181,7 @@ const AddEditSupplier = () => {
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StyledDatePicker
-              value={selectedDate}
-              defaultValue={addSupplierModal ? "" : date}
+              value={selectedDate || date}
               onChange={(date) => {
                 setSelectedDate(date);
                 setValue("date", date, { shouldValidate: true });

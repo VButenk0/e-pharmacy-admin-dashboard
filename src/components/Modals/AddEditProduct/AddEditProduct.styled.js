@@ -4,12 +4,22 @@ export const ModalWrpr = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  @media only screen and (max-width: 767px) {
+    gap: 20px;
+  }
 `;
 
 export const ModalTitle = styled.h2`
   font-family: "Inter SemiBold";
   font-size: 24px;
+  font-weight: 600;
   line-height: 1.16667;
+
+  @media only screen and (max-width: 767px) {
+    font-size: 20px;
+    line-height: 1.2;
+  }
 `;
 
 export const InputsWrpr = styled.div`
@@ -19,6 +29,16 @@ export const InputsWrpr = styled.div`
   grid-column-gap: 8px;
   grid-row-gap: 14px;
   padding-bottom: 40px;
+
+  @media only screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    div {
+      width: 100%;
+    }
+  }
 `;
 
 export const StyledInput = styled.input`
@@ -30,10 +50,15 @@ export const StyledInput = styled.input`
 
   font-family: "Inter Regular";
   font-size: 12px;
+  font-weight: 400;
   line-height: 1.5;
 
   &::placeholder {
     color: var(--trans-text);
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 100%;
   }
 `;
 

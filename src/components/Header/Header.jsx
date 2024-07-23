@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import sprite from "../../assets/sprite.svg";
-import { logoutThunk } from "../../redux/auth/operations";
 import { selectEmail, selectIsLogged } from "../../redux/selectors";
 import {
+  BurgerIcon,
   HeaderWrpr,
   LogoTitleWrpr,
   LogoutBtn,
@@ -13,10 +13,14 @@ import {
   Title,
   TitleWrpr,
 } from "./Header.styled";
+import {
+  changeBurgerMenu,
+  changeLogoutModal,
+  changeModalOpen,
+} from "../../redux/modals/modalsSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const email = useSelector(selectEmail);
   const isLogged = useSelector(selectIsLogged);
   const location = useLocation();
@@ -39,9 +43,13 @@ const Header = () => {
 
   const currentPageTitle = getPageTitle(page);
 
+  const handleBurgerClick = () => {
+    dispatch(changeBurgerMenu(true));
+  };
+
   const handleLogoutClick = () => {
-    dispatch(logoutThunk());
-    navigate("/login");
+    dispatch(changeModalOpen(true));
+    dispatch(changeLogoutModal(true));
   };
 
   return (
@@ -49,9 +57,9 @@ const Header = () => {
       <LogoTitleWrpr>
         <LogoWrpr>
           {!isDesktop && (
-            <svg width="32" height="32">
+            <BurgerIcon width="32" height="32" onClick={handleBurgerClick}>
               <use href={sprite + "#burger"}></use>
-            </svg>
+            </BurgerIcon>
           )}
           <Link to={`/${isLogged ? "dashboard" : "login"}`}>
             <img src="/logo.svg" alt="Logo" width={40} height={40} />
@@ -66,11 +74,13 @@ const Header = () => {
           </SubTitleWrpr>
         </TitleWrpr>
       </LogoTitleWrpr>
-      <LogoutBtn onClick={handleLogoutClick}>
-        <svg width="16" height="16">
-          <use href={sprite + "#logout"}></use>
-        </svg>
-      </LogoutBtn>
+      {isDesktop && (
+        <LogoutBtn onClick={handleLogoutClick}>
+          <svg width="16" height="16">
+            <use href={sprite + "#logout"}></use>
+          </svg>
+        </LogoutBtn>
+      )}
     </HeaderWrpr>
   );
 };

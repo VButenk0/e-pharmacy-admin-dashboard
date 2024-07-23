@@ -6,12 +6,25 @@ export const FilterAndAddWrpr = styled.div`
   align-items: center;
 
   padding-top: 55px;
+
+  @media only screen and (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 18px;
+
+    padding-top: 20px;
+  }
 `;
 
 export const FilterWrpr = styled.div`
   display: flex;
   align-content: center;
   gap: 14px;
+
+  @media only screen and (max-width: 767px) {
+    gap: 8px;
+  }
 
   input {
     width: 224px;
@@ -21,6 +34,10 @@ export const FilterWrpr = styled.div`
 
     &::placeholder {
       color: var(--trans-text);
+    }
+
+    @media only screen and (max-width: 767px) {
+      width: 100%;
     }
   }
 

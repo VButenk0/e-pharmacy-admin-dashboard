@@ -8,10 +8,20 @@ export const AllOrdersWrpr = styled.div`
 
 export const FilterWrpr = styled.div`
   display: flex;
-  align-content: center;
+  align-items: center;
   gap: 14px;
 
   padding-top: 55px;
+
+  @media only screen and (max-width: 1439px) {
+    padding-top: 30px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    gap: 8px;
+
+    padding-top: 20px;
+  }
 
   input {
     width: 224px;
@@ -21,6 +31,10 @@ export const FilterWrpr = styled.div`
 
     &::placeholder {
       color: var(--trans-text);
+    }
+
+    @media only screen and (max-width: 767px) {
+      width: 100%;
     }
   }
 
@@ -35,6 +49,7 @@ export const FilterWrpr = styled.div`
     padding: 13px 30px;
 
     color: var(--white-text);
+    font-family: "Inter Medium";
     font-size: 14px;
     font-weight: 500;
     line-height: 1.28571;
@@ -45,13 +60,18 @@ export const FilterWrpr = styled.div`
     &:active {
       background-color: var(--accent-hover);
     }
+
+    @media only screen and (max-width: 767px) {
+      font-size: 12px;
+      line-height: 1.5;
+    }
   }
 `;
 
 export const TableTitle = styled.h2`
   background-color: var(--tab-bg);
   border-radius: 8px 8px 0 0;
-  width: 100%;
+  width: 1280px;
 
   font-family: "Inter SemiBold";
   font-size: 18px;
@@ -59,30 +79,53 @@ export const TableTitle = styled.h2`
   line-height: 1.33333;
 
   padding: 20px;
+
+  @media only screen and (max-width: 1439px) {
+    width: 960px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 671px;
+
+    font-size: 16px;
+    line-height: 1.25;
+
+    padding: 14px;
+  }
 `;
 
 export const TableWrpr = styled.div`
   width: 1280px;
-  height: 438px;
+  height: fit-content;
   border-radius: 0 0 8px 8px;
   padding: 0 20px;
   background-color: var(--white);
   border: 1px solid var(--border-color);
   border-top: none;
 
-  overflow: hidden;
+  @media only screen and (max-width: 1439px) {
+    width: 960px;
+    overflow-x: scroll;
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 671px;
+  }
 
   table {
     border-collapse: collapse;
     background-color: var(--white);
     width: 100%;
-    /* height: 100%; */
 
     thead {
       color: var(--trans-text);
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.28571;
+
+      tr th {
+        font-family: "Inter Medium";
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.28571;
+      }
     }
 
     tbody tr {
@@ -164,28 +207,8 @@ export const OrderStatusWrpr = styled.div`
 export const PaginWrpr = styled.div`
   display: flex;
   align-items: center;
-  /* gap: 8px; */
 
   margin: 0 auto;
-
-  /* div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 19px;
-    height: 19px;
-
-    span {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: var(--tab-bg);
-      &.active {
-        background-color: var(--accent);
-      }
-    }
-  } */
 `;
 
 export const ImageNameWrpr = styled.div`
