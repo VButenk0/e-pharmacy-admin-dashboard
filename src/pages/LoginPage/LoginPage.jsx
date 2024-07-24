@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import sprite from "../../assets/sprite.svg";
+import logo from "../../images/logo.png";
 import pill from "../../images/white round pill.png";
 import lines from "../../images/three lines.png";
 import { loginThunk } from "../../redux/auth/operations";
@@ -18,7 +20,6 @@ import {
   PillImg,
   Title,
 } from "./LoginPage.styled";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const LoginPage = () => {
   return (
     <LoginPageWrpr>
       <LogoWrpr>
-        <img src="/logo.svg" alt="Logo" width={44} height={44} />
+        <img src={logo} alt="Logo" width={44} height={44} />
         <p>E-Pharmacy</p>
       </LogoWrpr>
       <ContentWrpr>

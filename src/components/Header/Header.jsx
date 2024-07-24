@@ -2,6 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import sprite from "../../assets/sprite.svg";
+import logo from "../../images/logo.png";
+import {
+  changeBurgerMenu,
+  changeLogoutModal,
+  changeModalOpen,
+} from "../../redux/modals/modalsSlice";
 import { selectEmail, selectIsLogged } from "../../redux/selectors";
 import {
   BurgerIcon,
@@ -13,11 +19,6 @@ import {
   Title,
   TitleWrpr,
 } from "./Header.styled";
-import {
-  changeBurgerMenu,
-  changeLogoutModal,
-  changeModalOpen,
-} from "../../redux/modals/modalsSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,7 @@ const Header = () => {
   const location = useLocation();
   const page = location.pathname;
 
-  // const isMobile = useMediaQuery({ maxWidth: 767 });
-  // const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1439 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1440 });
 
   const getPageTitle = (path) => {
@@ -62,7 +62,12 @@ const Header = () => {
             </BurgerIcon>
           )}
           <Link to={`/${isLogged ? "dashboard" : "login"}`}>
-            <img src="/logo.svg" alt="Logo" width={40} height={40} />
+            <img
+              src={logo}
+              alt="Logo"
+              width={isMobile ? 32 : 40}
+              height={isMobile ? 32 : 40}
+            />
           </Link>
         </LogoWrpr>
         <TitleWrpr>
