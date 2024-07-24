@@ -20,6 +20,7 @@ import {
   PillImg,
   Title,
 } from "./LoginPage.styled";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -47,9 +48,12 @@ const LoginPage = () => {
     dispatch(loginThunk(data))
       .unwrap()
       .then(() => {
+        toast.success(`Welcome back!`);
         navigate("/");
       })
-      .catch(() => {});
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   return (
