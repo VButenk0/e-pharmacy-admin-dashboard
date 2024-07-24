@@ -3,12 +3,17 @@ import { closeModals } from "../../../redux/modals/modalsSlice";
 import { LogoutBtn, LogoutWrpr } from "./Logout.styled";
 import { useDispatch } from "react-redux";
 import { logoutThunk } from "../../../redux/auth/operations";
+import { toast } from "react-toastify";
 
 const Logout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(logoutThunk());
+    dispatch(logoutThunk())
+      .then(() => toast.success("Logout successfully"))
+      .catch((err) => {
+        toast.error(err.message);
+      });
     navigate("/login");
     closeModals();
   };

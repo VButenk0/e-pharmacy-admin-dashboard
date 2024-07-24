@@ -21,6 +21,7 @@ import {
   editProductThunk,
   getProductsThunk,
 } from "../../../redux/data/operations";
+import { toast } from "react-toastify";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -96,13 +97,19 @@ const AddEditProduct = () => {
     data.price = data.amount.toFixed(2);
 
     if (addProductModal) {
-      dispatch(addProductThunk(data)).then(() => dispatch(getProductsThunk()));
-      console.log("Added a product with this parameters:", data);
+      dispatch(addProductThunk(data))
+        .then(() => {
+          toast.success(`${name} successfully added`);
+          dispatch(getProductsThunk());
+        })
+        .catch((err) => toast.error(err.message));
     } else {
-      dispatch(editProductThunk({ id: _id, data })).then(() =>
-        dispatch(getProductsThunk())
-      );
-      console.log("Edited a product with this parameters:", data);
+      dispatch(editProductThunk({ id: _id, data }))
+        .then(() => {
+          toast.success(`${name} successfully edited`);
+          dispatch(getProductsThunk());
+        })
+        .catch((err) => toast.error(err.message));
     }
     dispatch(closeModals());
   };

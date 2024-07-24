@@ -25,6 +25,7 @@ import {
   ModalWrpr,
   StyledInput,
 } from "../AddEditProduct/AddEditProduct.styled";
+import { toast } from "react-toastify";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -133,15 +134,19 @@ const AddEditSupplier = () => {
     data.amount = `৳ ${data.amount}`;
 
     if (addSupplierModal) {
-      dispatch(addSupplierThunk(data)).then(() =>
-        dispatch(getSuppliersThunk())
-      );
-      console.log("Added a supplier with this parameters:", data);
+      dispatch(addSupplierThunk(data))
+        .then(() => {
+          toast.success(`${name} successfully added`);
+          dispatch(getSuppliersThunk());
+        })
+        .catch((err) => toast.error(err.message));
     } else {
-      dispatch(editSupplierThunk({ id: _id, data })).then(() =>
-        dispatch(getSuppliersThunk())
-      );
-      console.log("Edited a supplier with this parameters:", data);
+      dispatch(editSupplierThunk({ id: _id, data }))
+        .then(() => {
+          toast.success(`${name} successfully edited`);
+          dispatch(getSuppliersThunk());
+        })
+        .catch((err) => toast.error(err.message));
     }
     dispatch(closeModals());
   };

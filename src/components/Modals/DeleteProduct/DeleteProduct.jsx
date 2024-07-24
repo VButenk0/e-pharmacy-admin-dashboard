@@ -6,15 +6,20 @@ import {
   getProductsThunk,
 } from "../../../redux/data/operations";
 import { selectSelectedItem } from "../../../redux/selectors";
+import { toast } from "react-toastify";
 
 const DeleteProduct = () => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(selectSelectedItem);
-  const { _id } = selectedItem;
+  const { _id, name } = selectedItem;
 
   const handleDelete = () => {
-    dispatch(deleteProductThunk(_id)).then(() => dispatch(getProductsThunk()));
-    console.log(`Product with id: ${_id} has deleted`);
+    dispatch(deleteProductThunk(_id))
+      .then(() => {
+        toast.success(`${name} successfully deleted`);
+        dispatch(getProductsThunk());
+      })
+      .catch((err) => toast.error(err.message));
     dispatch(closeModals());
   };
 
