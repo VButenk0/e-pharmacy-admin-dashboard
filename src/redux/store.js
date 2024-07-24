@@ -1,61 +1,67 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { authReducer } from "./auth/authSlice";
-// import { booksReducer } from "./books/booksSlice";
-// import storage from "redux-persist/lib/storage";
-// import {
-//   persistStore,
-//   persistReducer,
-//   FLUSH,
-//   REHYDRATE,
-//   PAUSE,
-//   PERSIST,
-//   PURGE,
-//   REGISTER,
-// } from "redux-persist";
-import { modalsReducer } from "./modals/modalsSlice";
-import { dataReducer } from "./data/dataSlice";
+import storage from "redux-persist/lib/storage";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import { authReducer } from "./auth/authSlice";
+import { dataReducer } from "./data/dataSlice";
+import { modalsReducer } from "./modals/modalsSlice";
 
-// const authPersistConfig = {
-//   key: "auth",
-//   version: 1,
-//   storage,
-//   whitelist: ["token", "refreshToken", "user", "isLogged"],
-// };
+const authPersistConfig = {
+  key: "auth",
+  version: 1,
+  storage,
+  whitelist: ["token", "email"],
+};
 
-// const booksPersistConfig = {
-//   key: "books",
-//   storage,
-//   whitelist: ["books", "library"],
-// };
+const dataPersistConfig = {
+  key: "data",
+  storage,
+  whitelist: [
+    "statistics",
+    "recentCustomers",
+    "incomeExpenses",
+    "orders",
+    "products",
+    "suppliers",
+    "customers",
+  ],
+};
 
-// const modalsPersistConfig = {
-//   key: "modals",
-//   storage,
-//   whitelist: [],
-// };
+const modalsPersistConfig = {
+  key: "modals",
+  storage,
+  whitelist: [],
+};
 
-// const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-// const persistedBooksReducer = persistReducer(booksPersistConfig, booksReducer);
+const persistedDataReducer = persistReducer(dataPersistConfig, dataReducer);
 
-// const persistedModalsReducer = persistReducer(
-//   modalsPersistConfig,
-//   modalsReducer
-// );
+const persistedModalsReducer = persistReducer(
+  modalsPersistConfig,
+  modalsReducer
+);
 
 export const store = configureStore({
   reducer: {
-    authSlice: authReducer,
-    dataSlice: dataReducer,
-    modalsSlice: modalsReducer,
+    authSlice: persistedAuthReducer,
+    dataSlice: persistedDataReducer,
+    modalsSlice: persistedModalsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });
 
-// export let persistor = persistStore(store);
+export let persistor = persistStore(store);

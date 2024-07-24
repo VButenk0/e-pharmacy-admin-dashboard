@@ -7,10 +7,12 @@ import Global from "./styles/common.js";
 import { store } from "./redux/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-      <Global />
-    </BrowserRouter>
-  </Provider>
+  <BrowserRouter basename="/e-pharmacy-admin-dashboard">
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+        <Global />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>
 );
