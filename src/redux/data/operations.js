@@ -51,9 +51,9 @@ export const addProductThunk = createAsyncThunk(
 
 export const editProductThunk = createAsyncThunk(
   "data/editProduct",
-  async (_id, thunkApi) => {
+  async ({ _id, ...credentials }, thunkApi) => {
     try {
-      const { data } = await api.put(`/products/${_id}`);
+      const { data } = await api.put(`/products/${_id}`, credentials);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -99,9 +99,9 @@ export const addSupplierThunk = createAsyncThunk(
 
 export const editSupplierThunk = createAsyncThunk(
   "data/editSupplier",
-  async (id, thunkApi) => {
+  async ({ _id, ...credentials }, thunkApi) => {
     try {
-      const { data } = await api.put(`/suppliers/${id}`);
+      const { data } = await api.put(`/suppliers/${_id}`, credentials);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

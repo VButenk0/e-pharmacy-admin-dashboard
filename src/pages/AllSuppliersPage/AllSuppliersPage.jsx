@@ -74,11 +74,7 @@ const AllSuppliersPage = () => {
   };
 
   const handleEditSupplier = (supplier) => {
-    dispatch(
-      changeSelectedItem({
-        _id: supplier._id,
-      })
-    );
+    dispatch(changeSelectedItem(supplier));
     dispatch(changeModalOpen(true));
     dispatch(changeEditSupplierModal(true));
   };
@@ -113,7 +109,7 @@ const AllSuppliersPage = () => {
                   <th>Address</th>
                   <th>Company</th>
                   <th>Delivery date</th>
-                  <th>Ammount</th>
+                  <th>Amount</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>

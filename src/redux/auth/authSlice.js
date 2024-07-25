@@ -7,7 +7,7 @@ export const authSlice = createSlice({
     name: "",
     email: "",
     token: "",
-    isLogged: false,
+    isLogged: true, // false
     isLoading: false,
     isError: null,
   },
@@ -19,7 +19,6 @@ export const authSlice = createSlice({
         state.name = payload.name;
         state.email = payload.email;
         state.token = payload.token;
-        localStorage.setItem("token", payload.token);
         state.isLogged = true;
         state.isLoading = false;
         state.isError = null;
@@ -28,7 +27,6 @@ export const authSlice = createSlice({
         state.name = "";
         state.email = "";
         state.token = "";
-        localStorage.removeItem("token");
         state.isLogged = false;
         state.isLoading = false;
         state.isError = null;

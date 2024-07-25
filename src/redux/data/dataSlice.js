@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
 import {
   addProductThunk,
   addSupplierThunk,
@@ -88,6 +88,14 @@ export const dataSlice = createSlice({
       })
       .addCase(getCustomerInfoThunk.fulfilled, (state, { payload }) => {
         state.customerInfo = payload;
+      })
+      .addMatcher(isPending, (state) => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addMatcher(isRejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isError = payload;
       });
   },
 });

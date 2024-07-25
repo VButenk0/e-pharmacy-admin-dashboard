@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import dayjs from "dayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { styled } from "@mui/system";
 import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import { closeModals } from "../../../redux/modals/modalsSlice";
 import {
   addSupplierThunk,
@@ -25,7 +26,8 @@ import {
   ModalWrpr,
   StyledInput,
 } from "../AddEditProduct/AddEditProduct.styled";
-import { toast } from "react-toastify";
+import { ErrorMsg } from "./AddEditSupplier.styled";
+import { capitalizeWords } from "../../../helpers/helperFunctions";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -95,22 +97,68 @@ const AddEditSupplier = () => {
   const selectedItem = useSelector(selectSelectedItem);
   const { _id, name, address, suppliers, date, amount, status } = selectedItem;
 
+  const notFormattedAmount = (amount) =>
+    parseFloat(amount.replace(/[^0-9.]/g, ""));
+
   const validationSchemaAdd = Yup.object().shape({
-    name: Yup.string().required("Supplier Info is required"),
-    address: Yup.string().required("Address is required"),
-    suppliers: Yup.string().required("Suppliers is required"),
+    name: Yup.string()
+      .required("Supplier Info is required")
+      .matches(
+        /^[A-Za-z]+\s[A-Za-z]+$/,
+        "Supplier Info must contain at least two words"
+      )
+      .max(20, "Supplier Info must be at most 20 characters")
+      .min(4, "Supplier Info must be at least 4 characters"),
+    address: Yup.string()
+      .required("Address is required")
+      .matches(
+        /^[A-Za-z]+-\d+$/,
+        "Address must be in the format 'StreetName-Number'"
+      ),
+    suppliers: Yup.string()
+      .required("Suppliers is required")
+      .min(3, "Suppliers must be at least 3 characters")
+      .max(20, "Suppliers must be at most 20 characters"),
     date: Yup.string().required("Date is required"),
-    amount: Yup.string().required("Amount is required"),
-    status: Yup.string().required("Status is required"),
+    amount: Yup.number()
+      .required("Amount is required")
+      .min(1, "Amount must be at least 1")
+      .max(9999, "Amount must be at most 9999"),
+    status: Yup.string()
+      .required("Status is required")
+      .oneOf(
+        ["Active", "Deactive"],
+        "Status must be either 'Active' or 'Deactive'"
+      ),
   });
 
   const validationSchemaEdit = Yup.object().shape({
-    name: Yup.string().nullable(),
-    address: Yup.string().nullable(),
-    suppliers: Yup.string().nullable(),
-    date: Yup.string().nullable(),
-    amount: Yup.string().nullable(),
-    status: Yup.string().nullable(),
+    name: Yup.string()
+      .notRequired()
+      .matches(/^[A-Za-z]+\s[A-Za-z]+$/, "Name must contain at least two words")
+      .max(20, "Name must be at most 20 characters")
+      .min(4, "Name must be at least 4 characters"),
+    address: Yup.string()
+      .notRequired()
+      .matches(
+        /^[A-Za-z]+-\d+$/,
+        "Address must be in the format 'StreetName-Number'"
+      ),
+    suppliers: Yup.string()
+      .notRequired()
+      .min(3, "Suppliers must be at least 3 characters")
+      .max(20, "Suppliers must be at most 20 characters"),
+    date: Yup.string().notRequired(),
+    amount: Yup.number()
+      .notRequired()
+      .min(1, "Amount must be at least 1")
+      .max(9999, "Amount must be at most 9999"),
+    status: Yup.string()
+      .notRequired()
+      .oneOf(
+        ["Active", "Deactive"],
+        "Status must be either 'Active' or 'Deactive'"
+      ),
   });
 
   const {
@@ -124,24 +172,38 @@ const AddEditSupplier = () => {
     ),
   });
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(date ? dayjs(date) : null);
+
+  useEffect(() => {
+    setSelectedDate(date ? dayjs(date) : null);
+  }, [date]);
 
   const onSubmit = (data) => {
+    data.name = capitalizeWords(data.name);
+    data.address = capitalizeWords(data.address);
+    data.suppliers = capitalizeWords(data.suppliers);
     const formattedDate = selectedDate
       ? dayjs(selectedDate).format("MMMM D, YYYY")
       : null;
     data.date = formattedDate;
-    data.amount = `৳ ${data.amount}`;
+    data.amount = `৳ ${parseFloat(data.amount).toFixed(2)}`;
+
+    const changedData = {};
+    for (const key in data) {
+      if (data[key] !== selectedItem[key]) {
+        changedData[key] = data[key];
+      }
+    }
 
     if (addSupplierModal) {
       dispatch(addSupplierThunk(data))
         .then(() => {
-          toast.success(`${name} successfully added`);
+          toast.success(`${data.name} successfully added`);
           dispatch(getSuppliersThunk());
         })
         .catch((err) => toast.error(err.message));
     } else {
-      dispatch(editSupplierThunk({ id: _id, data }))
+      dispatch(editSupplierThunk({ _id, ...changedData }))
         .then(() => {
           toast.success(`${name} successfully edited`);
           dispatch(getSuppliersThunk());
@@ -166,7 +228,7 @@ const AddEditSupplier = () => {
             defaultValue={addSupplierModal ? "" : name}
             {...register("name")}
           />
-          {errors.name && <p>{errors.name.message}</p>}
+          {errors.name && <ErrorMsg>{errors.name.message}</ErrorMsg>}
 
           <StyledInput
             type="text"
@@ -174,7 +236,7 @@ const AddEditSupplier = () => {
             defaultValue={addSupplierModal ? "" : address}
             {...register("address")}
           />
-          {errors.address && <p>{errors.address.message}</p>}
+          {errors.address && <ErrorMsg>{errors.address.message}</ErrorMsg>}
 
           <StyledInput
             type="text"
@@ -182,40 +244,39 @@ const AddEditSupplier = () => {
             defaultValue={addSupplierModal ? "" : suppliers}
             {...register("suppliers")}
           />
-          {errors.suppliers && <p>{errors.suppliers.message}</p>}
+          {errors.suppliers && <ErrorMsg>{errors.suppliers.message}</ErrorMsg>}
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StyledDatePicker
-              value={selectedDate || date}
+              value={selectedDate}
               onChange={(date) => {
                 setSelectedDate(date);
                 setValue("date", date, { shouldValidate: true });
               }}
-              renderInput={(params) => (
-                <StyledInput
-                  {...params}
-                  inputProps={{
-                    ...params.inputProps,
+              slotProps={{
+                textField: {
+                  inputProps: {
                     placeholder: "Delivery date",
-                  }}
-                />
-              )}
+                  },
+                },
+              }}
             />
           </LocalizationProvider>
-          {errors.date && <p>{errors.date.message}</p>}
+          {errors.date && <ErrorMsg>{errors.date.message}</ErrorMsg>}
 
           <StyledInput
-            type="text"
+            type="number"
+            step="0.01"
             placeholder="Amount"
-            defaultValue={addSupplierModal ? "" : amount}
+            defaultValue={addSupplierModal ? "" : notFormattedAmount(amount)}
             {...register("amount")}
           />
-          {errors.amount && <p>{errors.amount.message}</p>}
+          {errors.amount && <ErrorMsg>{errors.amount.message}</ErrorMsg>}
 
           <StyledFormControl variant="outlined">
             <Select
               displayEmpty
-              defaultValue={addSupplierModal ? "" : status}
+              defaultValue={status || "Active"}
               {...register("status")}
               input={<OutlinedInput notched={false} />}
               sx={{
@@ -258,7 +319,7 @@ const AddEditSupplier = () => {
               ))}
             </Select>
           </StyledFormControl>
-          {errors.status && <p>{errors.status.message}</p>}
+          {errors.status && <ErrorMsg>{errors.status.message}</ErrorMsg>}
         </InputsWrpr>
         <ButtonsWrpr>
           <button type="submit">{addSupplierModal ? "Add" : "Save"}</button>

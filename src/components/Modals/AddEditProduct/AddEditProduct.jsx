@@ -22,6 +22,7 @@ import {
   getProductsThunk,
 } from "../../../redux/data/operations";
 import { toast } from "react-toastify";
+import { capitalizeWords } from "../../../helpers/helperFunctions";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -68,19 +69,43 @@ const AddEditProduct = () => {
   const { _id, name, category, stock, suppliers, price } = selectedItem;
 
   const validationSchemaAdd = Yup.object().shape({
-    name: Yup.string().required("Product Info is required"),
+    name: Yup.string()
+      .required("Product Info is required")
+      .min(4, "Product Info must be at least 4 characters")
+      .max(20, "Product Info must be at most 20 characters"),
     category: Yup.string().required("Category is required"),
-    stock: Yup.string().required("Stock is required"),
-    suppliers: Yup.string().required("Suppliers is required"),
-    price: Yup.string().required("Price is required"),
+    stock: Yup.number()
+      .required("Stock is required")
+      .min(1, "Stock must be at least 1")
+      .max(100, "Stock must be at most 100"),
+    suppliers: Yup.string()
+      .required("Suppliers is required")
+      .min(3, "Suppliers must be at least 3 characters")
+      .max(20, "Suppliers must be at most 20 characters"),
+    price: Yup.number()
+      .required("Price is required")
+      .min(1, "Price must be at least 1")
+      .max(100, "Price must be at most 100"),
   });
 
   const validationSchemaEdit = Yup.object().shape({
-    name: Yup.string(),
-    category: Yup.string(),
-    stock: Yup.string(),
-    suppliers: Yup.string(),
-    price: Yup.string(),
+    name: Yup.string()
+      .notRequired()
+      .min(4, "Product Info must be at least 4 characters")
+      .max(20, "Product Info must be at most 20 characters"),
+    category: Yup.string().required("Category is required"),
+    stock: Yup.number()
+      .notRequired()
+      .min(1, "Stock must be at least 1")
+      .max(100, "Stock must be at most 100"),
+    suppliers: Yup.string()
+      .notRequired()
+      .min(3, "Suppliers must be at least 3 characters")
+      .max(20, "Suppliers must be at most 20 characters"),
+    price: Yup.number()
+      .notRequired()
+      .min(1, "Price must be at least 1")
+      .max(100, "Price must be at most 100"),
   });
 
   const {
@@ -94,19 +119,32 @@ const AddEditProduct = () => {
   });
 
   const onSubmit = (data) => {
-    data.price = data.amount.toFixed(2);
+    data.name = capitalizeWords(data.name);
+    data.suppliers = capitalizeWords(data.suppliers);
+    data.price = parseFloat(data.price).toFixed(2);
+
+    const changedData = {};
+    for (const key in data) {
+      if (data[key] !== selectedItem[key]) {
+        changedData[key] = data[key];
+      }
+    }
+
+    //
+    console.log(changedData);
+    //
 
     if (addProductModal) {
       dispatch(addProductThunk(data))
         .then(() => {
-          toast.success(`${name} successfully added`);
+          toast.success(`${data.name} successfully added`);
           dispatch(getProductsThunk());
         })
         .catch((err) => toast.error(err.message));
     } else {
-      dispatch(editProductThunk({ id: _id, data }))
+      dispatch(editProductThunk({ _id, ...changedData }))
         .then(() => {
-          toast.success(`${name} successfully edited`);
+          toast.success(`${data.name} successfully edited`);
           dispatch(getProductsThunk());
         })
         .catch((err) => toast.error(err.message));
@@ -187,7 +225,7 @@ const AddEditProduct = () => {
           {errors.category && <p>{errors.category.message}</p>}
 
           <StyledInput
-            type="text"
+            type="number"
             placeholder="Stock"
             defaultValue={addProductModal ? "" : stock}
             {...register("stock")}
@@ -201,7 +239,8 @@ const AddEditProduct = () => {
           />
           {errors.suppliers && <p>{errors.suppliers.message}</p>}
           <StyledInput
-            type="text"
+            type="number"
+            step="0.01"
             placeholder="Price"
             defaultValue={addProductModal ? "" : price}
             {...register("price")}
