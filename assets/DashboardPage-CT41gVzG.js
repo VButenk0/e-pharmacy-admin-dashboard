@@ -1,4 +1,4 @@
-import{p as i,b as a,e as m,j as e,f as g,h as j,u as f,r as b,i as u}from"./index-DLbzULYX.js";import{I as w,C as v}from"./AllOrdersPage.styled-D2dBQYZT.js";import{s as n}from"./sprite-DRLobJkB.js";const c=i.h2`
+import{p as i,b as a,e as m,j as e,f as g,h as j,u as f,r as b,i as u}from"./index-BafUE7VM.js";import{I as w,C as v}from"./AllOrdersPage.styled-2cww2EsH.js";import{s as n}from"./sprite-DRLobJkB.js";const c=i.h2`
   background-color: var(--tab-bg);
   border-radius: 8px 8px 0 0;
   font-family: "Inter SemiBold";
