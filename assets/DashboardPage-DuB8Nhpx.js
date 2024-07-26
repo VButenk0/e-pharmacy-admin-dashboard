@@ -1,4 +1,4 @@
-import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u}from"./index-jOJm0qSQ.js";import{I as w,C as v}from"./AllOrdersPage.styled-Fl9q1U_S.js";const c=s.h2`
+import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}from"./index-DyrtvmBB.js";import{I as w,C as v}from"./AllOrdersPage.styled-B1Qsv-6J.js";const c=s.h2`
   background-color: var(--tab-bg);
   border-radius: 8px 8px 0 0;
   font-family: "Inter SemiBold";
@@ -32,7 +32,7 @@ import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u
 
     padding: 0 14px;
   }
-`,p=s.table`
+`,h=s.table`
   width: 100%;
   height: 100%;
   border-collapse: collapse;
@@ -126,7 +126,7 @@ import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u
   &.error {
     text-decoration: line-through;
   }
-`,k=()=>{const t=l(m);return e.jsxs("div",{children:[e.jsx(c,{children:"Income/Expenses"}),e.jsx(x,{children:e.jsxs(p,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Type"}),e.jsx("th",{children:"Description"}),e.jsx("th",{children:"Amount"})]})}),e.jsx("tbody",{children:t.map((r,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsx(y,{className:r.type.toLowerCase(),children:r.type})}),e.jsx("th",{children:r.name}),e.jsx("th",{children:e.jsx(T,{className:r.type.toLowerCase(),children:r.amount})})]},i))})]})})]})},I=()=>{const t=l(g);return e.jsxs("div",{children:[e.jsx(c,{children:"Recent Customers"}),e.jsx(x,{children:e.jsxs(p,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Name"}),e.jsx("th",{children:"Email"}),e.jsx("th",{children:"Spent"})]})}),e.jsx("tbody",{children:t.map((r,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsxs(w,{children:[e.jsx("img",{src:r.image||r.photo,alt:r.name+"'s Photo",width:36,height:36}),r.name]})}),e.jsx("th",{children:r.email}),e.jsx("th",{children:r.spent})]},i))})]})})]})},S=s.div`
+`,k=()=>{const r=a(m);return e.jsxs("div",{children:[e.jsx(c,{children:"Income/Expenses"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Type"}),e.jsx("th",{children:"Description"}),e.jsx("th",{children:"Amount"})]})}),e.jsx("tbody",{children:r.map((t,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsx(y,{className:t.type.toLowerCase(),children:t.type})}),e.jsx("th",{children:t.name}),e.jsx("th",{children:e.jsx(T,{className:t.type.toLowerCase(),children:t.amount})})]},i))})]})})]})},z=()=>{const r=a(g);return e.jsxs("div",{children:[e.jsx(c,{children:"Recent Customers"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Name"}),e.jsx("th",{children:"Email"}),e.jsx("th",{children:"Spent"})]})}),e.jsx("tbody",{children:r.map((t,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsxs(w,{children:[e.jsx("img",{src:t.image||t.photo,alt:t.name+"'s Photo",width:36,height:36}),t.name]})}),e.jsx("th",{children:t.email}),e.jsx("th",{children:t.spent})]},i))})]})})]})},C=s.div`
   display: flex;
   align-items: center;
   gap: 20px;
@@ -181,7 +181,7 @@ import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u
       line-height: 1.16667;
     }
   }
-`,a=s.p`
+`,l=s.p`
   font-family: "Inter SemiBold";
   font-size: 24px;
   font-weight: 600;
@@ -191,7 +191,7 @@ import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u
     font-size: 16px;
     line-height: 1.25;
   }
-`,z=()=>{const t=l(j),r=t.allProducts,i=t.allSuppliers,h=t.allCustomers;return e.jsxs(S,{children:[e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-products"})}),e.jsx("p",{children:"All products"})]}),e.jsx(a,{children:r.toLocaleString("en-US")})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All suppliers"})]}),e.jsx(a,{children:i})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All customers"})]}),e.jsx(a,{children:h})]})]})},C=s.div`
+`,I=()=>{const r=a(j),t=r.allProducts,i=r.allSuppliers,p=r.allCustomers;return e.jsxs(C,{children:[e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-products"})}),e.jsx("p",{children:"All products"})]}),e.jsx(l,{children:t.toLocaleString("en-US")})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All suppliers"})]}),e.jsx(l,{children:i})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All customers"})]}),e.jsx(l,{children:p})]})]})},S=s.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -200,4 +200,4 @@ import{p as s,J as l,ap as m,j as e,aq as g,ar as j,s as n,u as f,r as b,as as u
   @media only screen and (max-width: 1439px) {
     flex-direction: column;
   }
-`,A=()=>{const t=f();return b.useEffect(()=>{t(u())},[t]),e.jsxs(v,{children:[e.jsx(z,{}),e.jsxs(C,{children:[e.jsx(I,{}),e.jsx(k,{})]})]})};export{A as default};
+`,W=()=>{const r=f();return b.useEffect(()=>{r(u())},[r]),e.jsxs(v,{children:[e.jsx(I,{}),e.jsxs(S,{children:[e.jsx(z,{}),e.jsx(k,{})]})]})};export{W as default};
