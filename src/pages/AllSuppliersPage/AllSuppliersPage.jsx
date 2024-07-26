@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Pagination, PaginationItem } from "@mui/material";
 import Container from "../../components/Container/Container";
+import Modal from "../../components/Modals/Modal/Modal";
 import sprite from "../../assets/sprite.svg";
 import {
-  changeAddSupplierModal,
-  changeEditSupplierModal,
-  changeModalOpen,
-} from "../../redux/modals/modalsSlice";
-import { selectPaginPage, selectSuppliers } from "../../redux/selectors";
+  displayedFunc,
+  filteredFunc,
+  handleFilterChange,
+  pageOfCustomersFunc,
+} from "../../helpers/helperFunctions";
+import {
+  changePaginPage,
+  changeSelectedItem,
+} from "../../redux/data/dataSlice";
 import { getSuppliersThunk } from "../../redux/data/operations";
+import { selectPaginPage, selectSuppliers } from "../../redux/selectors";
 import {
   AllOrdersWrpr,
   PaginWrpr,
@@ -20,22 +27,15 @@ import {
   FilterWrpr,
 } from "../AllProductsPage/AllProductsPage.styled";
 import { AddSupBtn, StatusWrpr, SupEditBtn } from "./AllSuppliersPage.styled";
-import {
-  displayedFunc,
-  filteredFunc,
-  handleFilterChange,
-  pageOfCustomersFunc,
-} from "../../helpers/helperFunctions";
-import {
-  changePaginPage,
-  changeSelectedItem,
-} from "../../redux/data/dataSlice";
-import { Pagination, PaginationItem } from "@mui/material";
 
 const AllSuppliersPage = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddSupplierModalOpen, setIsAddSupplierModalOpen] = useState(false);
+  const [isEditSupplierModalOpen, setIsEditSupplierModalOpen] = useState(false);
 
   const page = useSelector(selectPaginPage);
   const suppliers = useSelector(selectSuppliers);
@@ -69,14 +69,14 @@ const AllSuppliersPage = () => {
   const displayedSuppliers = displayedFunc(filteredSuppliers, page);
 
   const handleAddSupplier = () => {
-    dispatch(changeModalOpen(true));
-    dispatch(changeAddSupplierModal(true));
+    setIsModalOpen(true);
+    setIsAddSupplierModalOpen(true);
   };
 
   const handleEditSupplier = (supplier) => {
     dispatch(changeSelectedItem(supplier));
-    dispatch(changeModalOpen(true));
-    dispatch(changeEditSupplierModal(true));
+    setIsModalOpen(true);
+    setIsEditSupplierModalOpen(true);
   };
 
   return (
@@ -183,6 +183,16 @@ const AllSuppliersPage = () => {
           />
         </PaginWrpr>
       </AllOrdersWrpr>
+      {isModalOpen && (
+        <Modal
+          modalIsOpen={isModalOpen}
+          addSupplierModal={isAddSupplierModalOpen}
+          editSupplierModal={isEditSupplierModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          closeAddSupplierModal={() => setIsAddSupplierModalOpen(false)}
+          closeEditSupplierModal={() => setIsEditSupplierModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

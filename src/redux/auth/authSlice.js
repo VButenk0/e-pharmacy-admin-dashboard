@@ -7,7 +7,7 @@ export const authSlice = createSlice({
     name: "",
     email: "",
     token: "",
-    isLogged: true, // false
+    isLogged: false,
     isLoading: false,
     isError: null,
   },

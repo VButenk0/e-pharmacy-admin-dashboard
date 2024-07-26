@@ -1,15 +1,9 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactDom from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Fade } from "@mui/material";
 import sprite from "../../assets/sprite.svg";
-import SidebarMenu from "./SidebarMenu";
-import {
-  changeLogoutModal,
-  changeModalOpen,
-  closeModals,
-} from "../../redux/modals/modalsSlice";
-import { selectBurgerMenu } from "../../redux/selectors";
+import Modal from "../Modals/Modal/Modal";
 import { Overlay } from "../Modals/Modal/Modal.styled";
 import {
   SidebarContainer,
@@ -20,9 +14,11 @@ import {
 import { LogoutBtn } from "../Header/Header.styled";
 import { BtnsWrpr, StyledBtn } from "./SidebarMenu.styled";
 
-const Sidebar = () => {
+const Sidebar = ({ burgerMenu, closeBurgerMenu }) => {
   const dispatch = useDispatch();
-  const burgerMenu = useSelector(selectBurgerMenu);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -31,17 +27,19 @@ const Sidebar = () => {
     };
   }, []);
 
-  const closeModal = useCallback(() => {
+  const closeModals = useCallback(() => {
     document.body.style.overflow = "auto";
 
-    dispatch(closeModals(false));
-  }, [dispatch]);
+    setIsModalOpen(false);
+    setIsLogoutModalOpen(false);
+    closeBurgerMenu();
+  }, [closeBurgerMenu]);
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         document.body.style.overflow = "auto";
-        closeModal();
+        closeModals();
       }
     };
 
@@ -49,17 +47,17 @@ const Sidebar = () => {
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [closeModal, dispatch]);
+  }, [closeModals, dispatch]);
 
   const onBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      closeModal();
+      closeModals();
     }
   };
 
   const handleLogoutClick = () => {
-    dispatch(changeModalOpen(true));
-    dispatch(changeLogoutModal(true));
+    setIsModalOpen(true);
+    setIsLogoutModalOpen(true);
   };
 
   return ReactDom.createPortal(
@@ -103,7 +101,7 @@ const Sidebar = () => {
                 </LogoutBtn>
               </SidebarLogoutWrpr>
 
-              <BtnClose type="button" onClick={closeModal}>
+              <BtnClose type="button" onClick={closeModals}>
                 <svg width={26} height={26}>
                   <use href={sprite + "#x"} />
                 </svg>
@@ -112,6 +110,14 @@ const Sidebar = () => {
           </Fade>
         </SidebarContainer>
       </Overlay>
+      {isModalOpen && (
+        <Modal
+          modalIsOpen={isModalOpen}
+          logoutModal={isLogoutModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          closeLogoutModal={() => setIsLogoutModalOpen(false)}
+        />
+      )}
     </>,
     document.getElementById("portal")
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination, PaginationItem } from "@mui/material";
 import Container from "../../components/Container/Container";
+import Modal from "../../components/Modals/Modal/Modal";
 import sprite from "../../assets/sprite.svg";
 import pill from "../../images/pill.png";
 import {
@@ -10,12 +11,6 @@ import {
   handleFilterChange,
   pageOfCustomersFunc,
 } from "../../helpers/helperFunctions";
-import {
-  changeAddProductModal,
-  changeDeleteProductModal,
-  changeEditProductModal,
-  changeModalOpen,
-} from "../../redux/modals/modalsSlice";
 import {
   changePaginPage,
   changeSelectedItem,
@@ -41,6 +36,12 @@ const AllProductsPage = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+  const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
+  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
+    useState(false);
 
   const page = useSelector(selectPaginPage);
   const products = useSelector(selectProducts);
@@ -72,14 +73,14 @@ const AllProductsPage = () => {
   };
 
   const handleAddProduct = () => {
-    dispatch(changeModalOpen(true));
-    dispatch(changeAddProductModal(true));
+    setIsModalOpen(true);
+    setIsAddProductModalOpen(true);
   };
 
   const handleEditProduct = (product) => () => {
     dispatch(changeSelectedItem(product));
-    dispatch(changeModalOpen(true));
-    dispatch(changeEditProductModal(true));
+    setIsModalOpen(true);
+    setIsEditProductModalOpen(true);
   };
 
   const handleDeleteProduct = (product) => () => {
@@ -88,8 +89,8 @@ const AllProductsPage = () => {
         _id: product._id,
       })
     );
-    dispatch(changeModalOpen(true));
-    dispatch(changeDeleteProductModal(true));
+    setIsModalOpen(true);
+    setIsDeleteProductModalOpen(true);
   };
 
   const displayedProducts = displayedFunc(filteredProducts, page);
@@ -226,6 +227,18 @@ const AllProductsPage = () => {
           />
         </PaginWrpr>
       </AllOrdersWrpr>
+      {isModalOpen && (
+        <Modal
+          modalIsOpen={isModalOpen}
+          addProductModal={isAddProductModalOpen}
+          editProductModal={isEditProductModalOpen}
+          deleteProductModal={isDeleteProductModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          closeAddProductModal={() => setIsAddProductModalOpen(false)}
+          closeEditProductModal={() => setIsEditProductModalOpen(false)}
+          closeDeleteProductModal={() => setIsDeleteProductModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

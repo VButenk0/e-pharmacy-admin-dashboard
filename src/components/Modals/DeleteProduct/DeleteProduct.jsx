@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { closeModals } from "../../../redux/modals/modalsSlice";
 import { ButtonsWrpr, DeleteModalWrpr } from "./DeleteProduct.styled";
 import {
   deleteProductThunk,
@@ -8,7 +7,7 @@ import {
 import { selectSelectedItem } from "../../../redux/selectors";
 import { toast } from "react-toastify";
 
-const DeleteProduct = () => {
+const DeleteProduct = ({ closeModals }) => {
   const dispatch = useDispatch();
   const selectedItem = useSelector(selectSelectedItem);
   const { _id, name } = selectedItem;
@@ -20,7 +19,7 @@ const DeleteProduct = () => {
         dispatch(getProductsThunk());
       })
       .catch((err) => toast.error(err.message));
-    dispatch(closeModals());
+    closeModals();
   };
 
   return (
@@ -28,13 +27,7 @@ const DeleteProduct = () => {
       <h2>Delete this product?</h2>
       <ButtonsWrpr>
         <button onClick={handleDelete}>Delete</button>
-        <button
-          type="button"
-          onClick={() => {
-            dispatch(closeModals());
-          }}
-          className="cancel"
-        >
+        <button type="button" onClick={() => closeModals()} className="cancel">
           Cancel
         </button>
       </ButtonsWrpr>

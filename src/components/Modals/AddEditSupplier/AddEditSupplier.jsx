@@ -9,16 +9,13 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { styled } from "@mui/system";
 import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { closeModals } from "../../../redux/modals/modalsSlice";
+import { capitalizeWords } from "../../../helpers/helperFunctions";
 import {
   addSupplierThunk,
   editSupplierThunk,
   getSuppliersThunk,
 } from "../../../redux/data/operations";
-import {
-  selectAddSupplierModal,
-  selectSelectedItem,
-} from "../../../redux/selectors";
+import { selectSelectedItem } from "../../../redux/selectors";
 import {
   ButtonsWrpr,
   InputsWrpr,
@@ -27,7 +24,6 @@ import {
   StyledInput,
 } from "../AddEditProduct/AddEditProduct.styled";
 import { ErrorMsg } from "./AddEditSupplier.styled";
-import { capitalizeWords } from "../../../helpers/helperFunctions";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -73,13 +69,18 @@ const StyledDatePicker = styled(DatePicker)({
   border: "1px solid var(--border-color)",
   "& .MuiOutlinedInput-root": {
     border: "none",
+    borderRadius: "60px",
     boxShadow: "none",
+    height: "100%",
     "&:hover": {
       border: "none",
     },
     "&.Mui-focused": {
       border: "none",
     },
+  },
+  "&.MuiOutlinedInput-notchedOutline": {
+    border: "none",
   },
   "& .MuiInputBase-input": {
     padding: "0 18px",
@@ -89,11 +90,13 @@ const StyledDatePicker = styled(DatePicker)({
     outline: "none",
     boxShadow: "none",
   },
+  "& .MuiIconButton-root svg": {
+    color: "var(--accent)",
+  },
 });
 
-const AddEditSupplier = () => {
+const AddEditSupplier = ({ addSupplierModal, closeModals }) => {
   const dispatch = useDispatch();
-  const addSupplierModal = useSelector(selectAddSupplierModal);
   const selectedItem = useSelector(selectSelectedItem);
   const { _id, name, address, suppliers, date, amount, status } = selectedItem;
 
@@ -210,7 +213,7 @@ const AddEditSupplier = () => {
         })
         .catch((err) => toast.error(err.message));
     }
-    dispatch(closeModals());
+    closeModals();
   };
 
   const statuses = ["Active", "Deactive"];
@@ -326,9 +329,7 @@ const AddEditSupplier = () => {
           <button
             className="cancel"
             type="button"
-            onClick={() => {
-              dispatch(closeModals());
-            }}
+            onClick={() => closeModals()}
           >
             Cancel
           </button>

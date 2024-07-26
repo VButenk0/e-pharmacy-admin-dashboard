@@ -1,14 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { styled } from "@mui/system";
 import { MenuItem, Select, FormControl, OutlinedInput } from "@mui/material";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { closeModals } from "../../../redux/modals/modalsSlice";
+import { capitalizeWords } from "../../../helpers/helperFunctions";
 import {
-  selectAddProductModal,
-  selectSelectedItem,
-} from "../../../redux/selectors";
+  addProductThunk,
+  editProductThunk,
+  getProductsThunk,
+} from "../../../redux/data/operations";
+import { selectSelectedItem } from "../../../redux/selectors";
 import {
   ButtonsWrpr,
   InputsWrpr,
@@ -16,13 +19,6 @@ import {
   ModalWrpr,
   StyledInput,
 } from "./AddEditProduct.styled";
-import {
-  addProductThunk,
-  editProductThunk,
-  getProductsThunk,
-} from "../../../redux/data/operations";
-import { toast } from "react-toastify";
-import { capitalizeWords } from "../../../helpers/helperFunctions";
 
 const StyledFormControl = styled(FormControl)({
   width: "224px",
@@ -61,9 +57,8 @@ const StyledMenuItem = styled(MenuItem)({
   },
 });
 
-const AddEditProduct = () => {
+const AddEditProduct = ({ addProductModal, closeModals }) => {
   const dispatch = useDispatch();
-  const addProductModal = useSelector(selectAddProductModal);
   const selectedItem = useSelector(selectSelectedItem);
 
   const { _id, name, category, stock, suppliers, price } = selectedItem;
@@ -130,10 +125,6 @@ const AddEditProduct = () => {
       }
     }
 
-    //
-    console.log(changedData);
-    //
-
     if (addProductModal) {
       dispatch(addProductThunk(data))
         .then(() => {
@@ -149,7 +140,7 @@ const AddEditProduct = () => {
         })
         .catch((err) => toast.error(err.message));
     }
-    dispatch(closeModals());
+    closeModals();
   };
 
   const categories = [
@@ -179,7 +170,7 @@ const AddEditProduct = () => {
           <StyledFormControl variant="outlined">
             <Select
               displayEmpty
-              defaultValue={addProductModal ? "" : category}
+              defaultValue={category || ""}
               {...register("category")}
               input={<OutlinedInput notched={false} />}
               sx={{
@@ -252,7 +243,7 @@ const AddEditProduct = () => {
           <button
             type="button"
             onClick={() => {
-              dispatch(closeModals());
+              closeModals();
             }}
             className="cancel"
           >

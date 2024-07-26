@@ -1,33 +1,31 @@
 import { useCallback, useEffect } from "react";
 import ReactDom from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Fade } from "@mui/material";
 import sprite from "../../../assets/sprite.svg";
 import AddEditProduct from "../AddEditProduct/AddEditProduct";
 import AddEditSupplier from "../AddEditSupplier/AddEditSupplier";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import Logout from "../Logout/Logout";
-import { closeModals } from "../../../redux/modals/modalsSlice";
-import {
-  selectAddProductModal,
-  selectAddSupplierModal,
-  selectDeleteProductModal,
-  selectEditProductModal,
-  selectEditSupplierModal,
-  selectIsModalOpen,
-  selectLogoutModal,
-} from "../../../redux/selectors";
 import { BtnClose, ModalContainer, ModalStyled, Overlay } from "./Modal.styled";
 
-const Modal = () => {
+const Modal = ({
+  modalIsOpen,
+  addProductModal,
+  editProductModal,
+  deleteProductModal,
+  addSupplierModal,
+  editSupplierModal,
+  logoutModal,
+  closeModal,
+  closeAddProductModal,
+  closeEditProductModal,
+  closeDeleteProductModal,
+  closeAddSupplierModal,
+  closeEditSupplierModal,
+  closeLogoutModal,
+}) => {
   const dispatch = useDispatch();
-  const modalIsOpen = useSelector(selectIsModalOpen);
-  const addProductModal = useSelector(selectAddProductModal);
-  const editProductModal = useSelector(selectEditProductModal);
-  const deleteProductModal = useSelector(selectDeleteProductModal);
-  const addSupplierModal = useSelector(selectAddSupplierModal);
-  const editSupplierModal = useSelector(selectEditSupplierModal);
-  const logoutModal = useSelector(selectLogoutModal);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -36,17 +34,28 @@ const Modal = () => {
     };
   }, []);
 
-  const closeModal = useCallback(() => {
+  const closeModals = useCallback(() => {
     document.body.style.overflow = "auto";
-
-    dispatch(closeModals(false));
-  }, [dispatch]);
+    closeModal();
+    if (addProductModal || editProductModal || deleteProductModal) {
+      closeAddProductModal();
+      closeEditProductModal();
+      closeDeleteProductModal();
+    }
+    if (addSupplierModal || editSupplierModal) {
+      closeAddSupplierModal();
+      closeEditSupplierModal();
+    }
+    if (logoutModal) {
+      closeLogoutModal();
+    }
+  });
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         document.body.style.overflow = "auto";
-        closeModal();
+        closeModals();
       }
     };
 
@@ -54,11 +63,11 @@ const Modal = () => {
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [closeModal, dispatch]);
+  }, [closeModals, dispatch]);
 
   const onBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      closeModal();
+      closeModals();
     }
   };
 
@@ -68,12 +77,24 @@ const Modal = () => {
         <ModalContainer>
           <Fade in={modalIsOpen} timeout={700}>
             <ModalStyled>
-              {(addProductModal || editProductModal) && <AddEditProduct />}
-              {deleteProductModal && <DeleteProduct />}
-              {(addSupplierModal || editSupplierModal) && <AddEditSupplier />}
+              {(addProductModal || editProductModal) && (
+                <AddEditProduct
+                  addProductModal={addProductModal}
+                  closeModals={closeModals}
+                />
+              )}
+              {deleteProductModal && (
+                <DeleteProduct closeModals={closeModals} />
+              )}
+              {(addSupplierModal || editSupplierModal) && (
+                <AddEditSupplier
+                  addSupplierModal={addSupplierModal}
+                  closeModals={closeModals}
+                />
+              )}
               {logoutModal && <Logout />}
 
-              <BtnClose type="button" onClick={closeModal}>
+              <BtnClose type="button" onClick={closeModals}>
                 <svg width={26} height={26}>
                   <use href={sprite + "#x"} />
                 </svg>

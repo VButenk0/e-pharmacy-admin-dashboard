@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import Sidebar from "../Sidebar/Sidebar";
+import Modal from "../Modals/Modal/Modal";
 import sprite from "../../assets/sprite.svg";
 import logo from "../../images/logo.png";
-import {
-  changeBurgerMenu,
-  changeLogoutModal,
-  changeModalOpen,
-} from "../../redux/modals/modalsSlice";
 import { selectEmail, selectIsLogged } from "../../redux/selectors";
 import {
   BurgerIcon,
@@ -21,7 +19,9 @@ import {
 } from "./Header.styled";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const email = useSelector(selectEmail);
   const isLogged = useSelector(selectIsLogged);
   const location = useLocation();
@@ -44,12 +44,12 @@ const Header = () => {
   const currentPageTitle = getPageTitle(page);
 
   const handleBurgerClick = () => {
-    dispatch(changeBurgerMenu(true));
+    setIsBurgerMenuOpen(true);
   };
 
   const handleLogoutClick = () => {
-    dispatch(changeModalOpen(true));
-    dispatch(changeLogoutModal(true));
+    setIsModalOpen(true);
+    setIsLogoutModalOpen(true);
   };
 
   return (
@@ -85,6 +85,20 @@ const Header = () => {
             <use href={sprite + "#logout"}></use>
           </svg>
         </LogoutBtn>
+      )}
+      {isModalOpen && (
+        <Modal
+          modalIsOpen={isModalOpen}
+          logoutModal={isLogoutModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          closeLogoutModal={() => setIsLogoutModalOpen(false)}
+        />
+      )}
+      {isBurgerMenuOpen && (
+        <Sidebar
+          burgerMenu={isBurgerMenuOpen}
+          closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
+        />
       )}
     </HeaderWrpr>
   );
