@@ -12,7 +12,6 @@ import {
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
 import { dataReducer } from "./data/dataSlice";
-import { modalsReducer } from "./modals/modalsSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -35,26 +34,14 @@ const dataPersistConfig = {
   ],
 };
 
-const modalsPersistConfig = {
-  key: "modals",
-  storage,
-  whitelist: [],
-};
-
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 const persistedDataReducer = persistReducer(dataPersistConfig, dataReducer);
-
-const persistedModalsReducer = persistReducer(
-  modalsPersistConfig,
-  modalsReducer
-);
 
 export const store = configureStore({
   reducer: {
     authSlice: persistedAuthReducer,
     dataSlice: persistedDataReducer,
-    modalsSlice: persistedModalsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

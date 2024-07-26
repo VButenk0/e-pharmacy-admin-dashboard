@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { closeModals } from "../../../redux/modals/modalsSlice";
 import { LogoutBtn, LogoutWrpr } from "./Logout.styled";
 import { useDispatch } from "react-redux";
 import { logoutThunk } from "../../../redux/auth/operations";
 import { toast } from "react-toastify";
 
-const Logout = () => {
+const Logout = ({ closeModals }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {

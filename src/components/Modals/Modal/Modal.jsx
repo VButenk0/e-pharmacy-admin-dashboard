@@ -92,7 +92,7 @@ const Modal = ({
                   closeModals={closeModals}
                 />
               )}
-              {logoutModal && <Logout />}
+              {logoutModal && <Logout closeModals={closeModals} />}
 
               <BtnClose type="button" onClick={closeModals}>
                 <svg width={26} height={26}>

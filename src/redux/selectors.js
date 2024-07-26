@@ -12,17 +12,3 @@ export const selectCustomers = (state) => state.dataSlice.customers;
 export const selectCustomerInfo = (state) => state.dataSlice.customerInfo;
 export const selectSelectedItem = (state) => state.dataSlice.selectedItem;
 export const selectPaginPage = (state) => state.dataSlice.paginPage;
-
-export const selectIsModalOpen = (state) => state.modalsSlice.isModalOpen;
-export const selectAddProductModal = (state) =>
-  state.modalsSlice.addProductModal;
-export const selectEditProductModal = (state) =>
-  state.modalsSlice.editProductModal;
-export const selectDeleteProductModal = (state) =>
-  state.modalsSlice.deleteProductModal;
-export const selectAddSupplierModal = (state) =>
-  state.modalsSlice.addSupplierModal;
-export const selectEditSupplierModal = (state) =>
-  state.modalsSlice.editSupplierModal;
-export const selectLogoutModal = (state) => state.modalsSlice.logoutModal;
-export const selectBurgerMenu = (state) => state.modalsSlice.burgerMenu;

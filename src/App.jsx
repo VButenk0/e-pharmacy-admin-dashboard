@@ -1,12 +1,10 @@
 import { lazy, Suspense, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
-import Sidebar from "./components/Sidebar/Sidebar";
 import PublicRoute from "./routesConfig/PublicRoute";
 import PrivateRoute from "./routesConfig/PrivateRoute";
 import { userInfoThunk } from "./redux/auth/operations";
-import { selectBurgerMenu } from "./redux/selectors";
 
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const SharedLayout = lazy(() =>
@@ -26,7 +24,6 @@ const CustomersDataPage = lazy(() =>
 
 const App = () => {
   const dispatch = useDispatch();
-  const burgerMenu = useSelector(selectBurgerMenu);
 
   useEffect(() => {
     dispatch(userInfoThunk());
@@ -61,7 +58,6 @@ const App = () => {
           </Route>
         </Routes>
       </Suspense>
-      {burgerMenu && <Sidebar />}
     </>
   );
 };

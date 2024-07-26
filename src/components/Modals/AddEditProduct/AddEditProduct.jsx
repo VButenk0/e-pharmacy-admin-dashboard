@@ -71,16 +71,14 @@ const AddEditProduct = ({ addProductModal, closeModals }) => {
     category: Yup.string().required("Category is required"),
     stock: Yup.number()
       .required("Stock is required")
-      .min(1, "Stock must be at least 1")
-      .max(100, "Stock must be at most 100"),
+      .min(1, "Stock must be at least 1"),
     suppliers: Yup.string()
       .required("Suppliers is required")
       .min(3, "Suppliers must be at least 3 characters")
       .max(20, "Suppliers must be at most 20 characters"),
     price: Yup.number()
       .required("Price is required")
-      .min(1, "Price must be at least 1")
-      .max(100, "Price must be at most 100"),
+      .min(1, "Price must be at least 1"),
   });
 
   const validationSchemaEdit = Yup.object().shape({
