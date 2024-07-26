@@ -81,6 +81,7 @@ const StyledDatePicker = styled(DatePicker)({
   },
   "&.MuiOutlinedInput-notchedOutline": {
     border: "none",
+    borderRadius: "60px",
   },
   "& .MuiInputBase-input": {
     padding: "0 18px",
@@ -89,6 +90,9 @@ const StyledDatePicker = styled(DatePicker)({
     border: "none",
     outline: "none",
     boxShadow: "none",
+    fontFamily: "Inter Regular",
+    fontSize: "12px",
+    lineHeight: "1.5",
   },
   "& .MuiIconButton-root svg": {
     color: "var(--accent)",
