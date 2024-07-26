@@ -1,4 +1,4 @@
-import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}from"./index-DyrtvmBB.js";import{I as w,C as v}from"./AllOrdersPage.styled-B1Qsv-6J.js";const c=s.h2`
+import{p as i,b as a,e as m,j as e,f as g,h as j,u as f,r as b,i as u}from"./index-DLbzULYX.js";import{I as w,C as v}from"./AllOrdersPage.styled-D2dBQYZT.js";import{s as n}from"./sprite-DRLobJkB.js";const c=i.h2`
   background-color: var(--tab-bg);
   border-radius: 8px 8px 0 0;
   font-family: "Inter SemiBold";
@@ -12,7 +12,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
     line-height: 1.25;
     padding: 14px;
   }
-`,x=s.div`
+`,x=i.div`
   background-color: var(--white);
   border-radius: 0 0 8px 8px;
   width: 630px;
@@ -32,7 +32,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
 
     padding: 0 14px;
   }
-`,h=s.table`
+`,h=i.table`
   width: 100%;
   height: 100%;
   border-collapse: collapse;
@@ -95,7 +95,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
       border-bottom: none;
     }
   }
-`,y=s.div`
+`,y=i.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,7 +116,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
   &.error {
     background-color: var(--border-color);
   }
-`,T=s.p`
+`,T=i.p`
   &.expense {
     color: var(--accent2);
   }
@@ -126,7 +126,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
   &.error {
     text-decoration: line-through;
   }
-`,k=()=>{const r=a(m);return e.jsxs("div",{children:[e.jsx(c,{children:"Income/Expenses"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Type"}),e.jsx("th",{children:"Description"}),e.jsx("th",{children:"Amount"})]})}),e.jsx("tbody",{children:r.map((t,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsx(y,{className:t.type.toLowerCase(),children:t.type})}),e.jsx("th",{children:t.name}),e.jsx("th",{children:e.jsx(T,{className:t.type.toLowerCase(),children:t.amount})})]},i))})]})})]})},z=()=>{const r=a(g);return e.jsxs("div",{children:[e.jsx(c,{children:"Recent Customers"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Name"}),e.jsx("th",{children:"Email"}),e.jsx("th",{children:"Spent"})]})}),e.jsx("tbody",{children:r.map((t,i)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsxs(w,{children:[e.jsx("img",{src:t.image||t.photo,alt:t.name+"'s Photo",width:36,height:36}),t.name]})}),e.jsx("th",{children:t.email}),e.jsx("th",{children:t.spent})]},i))})]})})]})},C=s.div`
+`,k=()=>{const t=a(m);return e.jsxs("div",{children:[e.jsx(c,{children:"Income/Expenses"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Type"}),e.jsx("th",{children:"Description"}),e.jsx("th",{children:"Amount"})]})}),e.jsx("tbody",{children:t.map((r,s)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsx(y,{className:r.type.toLowerCase(),children:r.type})}),e.jsx("th",{children:r.name}),e.jsx("th",{children:e.jsx(T,{className:r.type.toLowerCase(),children:r.amount})})]},s))})]})})]})},I=()=>{const t=a(g);return e.jsxs("div",{children:[e.jsx(c,{children:"Recent Customers"}),e.jsx(x,{children:e.jsxs(h,{children:[e.jsx("thead",{children:e.jsxs("tr",{children:[e.jsx("th",{children:"Name"}),e.jsx("th",{children:"Email"}),e.jsx("th",{children:"Spent"})]})}),e.jsx("tbody",{children:t.map((r,s)=>e.jsxs("tr",{children:[e.jsx("th",{children:e.jsxs(w,{children:[e.jsx("img",{src:r.image||r.photo,alt:r.name+"'s Photo",width:36,height:36}),r.name]})}),e.jsx("th",{children:r.email}),e.jsx("th",{children:r.spent})]},s))})]})})]})},S=i.div`
   display: flex;
   align-items: center;
   gap: 20px;
@@ -138,7 +138,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
     flex-wrap: wrap;
     padding-bottom: 20px;
   }
-`,o=s.div`
+`,o=i.div`
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -164,7 +164,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
 
     padding: 14px;
   }
-`,d=s.div`
+`,d=i.div`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -181,7 +181,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
       line-height: 1.16667;
     }
   }
-`,l=s.p`
+`,l=i.p`
   font-family: "Inter SemiBold";
   font-size: 24px;
   font-weight: 600;
@@ -191,7 +191,7 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
     font-size: 16px;
     line-height: 1.25;
   }
-`,I=()=>{const r=a(j),t=r.allProducts,i=r.allSuppliers,p=r.allCustomers;return e.jsxs(C,{children:[e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-products"})}),e.jsx("p",{children:"All products"})]}),e.jsx(l,{children:t.toLocaleString("en-US")})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All suppliers"})]}),e.jsx(l,{children:i})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All customers"})]}),e.jsx(l,{children:p})]})]})},S=s.div`
+`,z=()=>{const t=a(j),r=t.allProducts,s=t.allSuppliers,p=t.allCustomers;return e.jsxs(S,{children:[e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-products"})}),e.jsx("p",{children:"All products"})]}),e.jsx(l,{children:r.toLocaleString("en-US")})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All suppliers"})]}),e.jsx(l,{children:s})]}),e.jsxs(o,{children:[e.jsxs(d,{children:[e.jsx("svg",{width:"20",height:"20",children:e.jsx("use",{href:n+"#all-users"})}),e.jsx("p",{children:"All customers"})]}),e.jsx(l,{children:p})]})]})},C=i.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -200,4 +200,4 @@ import{p as s,e as a,z as m,j as e,A as g,C as j,s as n,u as f,r as b,D as u}fro
   @media only screen and (max-width: 1439px) {
     flex-direction: column;
   }
-`,W=()=>{const r=f();return b.useEffect(()=>{r(u())},[r]),e.jsxs(v,{children:[e.jsx(I,{}),e.jsxs(S,{children:[e.jsx(z,{}),e.jsx(k,{})]})]})};export{W as default};
+`,B=()=>{const t=f();return b.useEffect(()=>{t(u())},[t]),e.jsxs(v,{children:[e.jsx(z,{}),e.jsxs(C,{children:[e.jsx(I,{}),e.jsx(k,{})]})]})};export{B as default};
